@@ -12,7 +12,7 @@ import LogoutAlert from "./logoutConfirm.jsx";
 import { NotificationProvider } from "./NotificationContext.jsx";
 import CostumerDetail from "./costumerDetail.jsx";
 import Validation from "./validation.jsx";
-import DashboardUser from "./dashboardUser.jsx";
+import DashboardUser from "./DashboardUser.jsx";
 import UploadData from "./UploadData.jsx"
 import ValidasiProses from "./validasiProses.jsx";
 import DashboardDetail from "./DashboardDetail.jsx";
@@ -60,7 +60,7 @@ export default function App() {
         <Route path="/dashboardhistory" element={<DashboarHistory />} />
         <Route path="/analisisUlasan" element={<AnalisisUlasan />} />
         <Route path="/landingpage" element={<LandingPage />} />
-        <Route path="/DashboardUser" element={<DashboardUser />} />
+        <Route path="/dashboardUser" element={<DashboardUser />} />
         <Route path="/uploadData" element={<UploadData />} />
         <Route path="/validasiproses" element={<ValidasiProses />} />
         <Route path="/dashboardDetail" element={<DashboardDetail />} />
