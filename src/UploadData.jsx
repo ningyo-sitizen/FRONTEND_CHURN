@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { useAuth } from "../utils/auth";
 import Header from './Header';
-import Footer from './footer';
+import Footer from './Footer';
 
 const UploadDataFull = () => {
     const [isOpen, setIsOpen] = useState(false);
