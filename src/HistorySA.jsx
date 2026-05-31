@@ -11,7 +11,7 @@ import {
     IconSearch, IconCalendar,
     IconX, IconChevronRight, IconChevronLeft,
 } from "@tabler/icons-react";
-import Footer from "./footer";
+import Footer from "./Footer";
 
 const API_URL = `${import.meta.env.VITE_BACKEND_URL}`;
 

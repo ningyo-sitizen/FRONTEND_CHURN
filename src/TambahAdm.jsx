@@ -6,7 +6,7 @@ import LogoutAlert from "./logoutConfirm";
 import HeaderSA from './HeaderSA';
 import "./App.css";
 import axios from "axios";
-import Footer from "./footer";
+import Footer from "./Footer";
 
 const API_URL = `${import.meta.env.VITE_BACKEND_URL}`;
 

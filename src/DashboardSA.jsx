@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuthAdmin } from "../utils/authadmin";
 import { Line, Bar } from "react-chartjs-2";
-import Footer from "./footer";
+import Footer from "./Footer";
 import {
     Chart as ChartJS,
     CategoryScale,

@@ -7,7 +7,7 @@ import axios from "axios";
 import HeaderSA from './HeaderSA';
 import { useAuthAdmin } from "../utils/authadmin";
 import { IconChevronDown, IconSearch } from "@tabler/icons-react";
-import Footer from "./footer";
+import Footer from "./Footer";
 
 const API_URL = `${import.meta.env.VITE_BACKEND_URL}`;
 

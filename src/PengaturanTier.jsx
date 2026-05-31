@@ -7,7 +7,7 @@ import LogoutAlert from "./logoutConfirm";
 import { IconTrash, IconCheck } from "@tabler/icons-react";
 import HeaderSA from './HeaderSA';
 import { useAuthAdmin } from "../utils/authadmin";
-import Footer from "./footer";
+import Footer from "./Footer";
 
 const API_URL = `${import.meta.env.VITE_BACKEND_URL}`;
 
