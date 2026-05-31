@@ -23,7 +23,7 @@ import { IconUserCircle } from '@tabler/icons-react';
 import { IconLogout2 } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Header from './header';
+import Header from './Header';
 import {useAuth} from '../utils/auth'
 import Sidebar from './SideBar';
 

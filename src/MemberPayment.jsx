@@ -11,8 +11,8 @@ import {
 } from '@tabler/icons-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from "../utils/auth";
-import Header from './header';
-import Footer from './footer';
+import Header from './Header';
+import Footer from './Footer';
 import LoadingOverlay from './LoadingOverlay';
 
 
