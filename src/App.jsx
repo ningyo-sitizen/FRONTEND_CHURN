@@ -60,7 +60,7 @@ export default function App() {
         <Route path="/dashboardhistory" element={<DashboarHistory />} />
         <Route path="/analisisUlasan" element={<AnalisisUlasan />} />
         <Route path="/landingpage" element={<LandingPage />} />
-        <Route path="/dashboardUser" element={<DashboardUser />} />
+        <Route path="/DashboardUser" element={<DashboardUser />} />
         <Route path="/uploadData" element={<UploadData />} />
         <Route path="/validasiproses" element={<ValidasiProses />} />
         <Route path="/dashboardDetail" element={<DashboardDetail />} />
