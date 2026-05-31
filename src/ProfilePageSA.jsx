@@ -27,8 +27,8 @@ import {
   IconTrash,
   IconCheck
 } from "@tabler/icons-react";
-import Header from './headerSA';
-import Footer from './footer.jsx';
+import Header from './HeaderSA.jsx';
+import Footer from './Footer.jsx';
 import { useAuthAdmin } from '../utils/authadmin.js';
 // import logochurn from './assets/logo churn.png';
 // import unggahdata from './assets/unggahdata.png';
