@@ -16,8 +16,8 @@ import DashboardUser from "./DashboardUser.jsx";
 import UploadData from "./UploadData.jsx"
 import ValidasiProses from "./validasiProses.jsx";
 import DashboardDetail from "./DashboardDetail.jsx";
-import Member from "./member.jsx";
-import MemberPayment from "./memberPayment.jsx";
+import Member from "./Member.jsx";
+import MemberPayment from "./MemberPayment.jsx";
 import Feedback from "./Feedback.jsx";
 import RiwayatPrediksi from "./RiwayatPrediksi.jsx";
 import LandingPage from "./LandingPage.jsx";
