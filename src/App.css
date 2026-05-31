@@ -1,0 +1,149 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* tanggalan */
+/* Custom DayPicker */
+.rdp-root {
+    font-size: 0.75rem; /* kecil sesuai desain */
+}
+
+/* Hari ini */
+.rdp-root .rdp-today:not(.rdp-outside) .rdp-day_button {
+    font-weight: bold;
+    color: #01040a;
+}
+
+/* Start & End date */
+.rdp-root .rdp-range_start .rdp-day_button,
+.rdp-root .rdp-range_end .rdp-day_button {
+    background-color: #667790;
+    color: white;
+    border-radius: 50%;
+    font-weight: normal;
+}
+
+/* Tengah range */
+.rdp-root .rdp-range_middle .rdp-day_button {
+    background-color: #dce1f0;
+    color: inherit;
+    border-radius: 0;
+}
+
+
+.rdp-root .rdp-day_button:hover {
+    background-color: #a0b4d1;
+    color: white;
+}
+
+
+.calendar-scale .rdp-day_button {
+    width: 1rem; 
+    height: 1rem;
+    line-height: 1rem;
+    
+    margin: 2px;
+}
+
+.calendar-scale .rdp-cell {
+    padding: 0.1rem 0.1rem ;
+}
+
+.calendar-scale .rdp-head_cell {
+    padding: 0.2rem 0.1rem ;
+}
+
+.calendar-scale .rdp-month {
+    margin-bottom: 1.5rem ; 
+}
+
+
+.calendar-scale .rdp-caption {
+    padding-bottom: 0.5rem ; 
+}
+
+@media (max-width: 360px) {
+    .calendar-scale .rdp-day_button {
+        width: 0.8rem;
+        height: 0.8rem;
+        line-height: 0.8rem;
+        margin: 1px;
+    }
+
+    .calendar-scale .rdp-caption_label {
+        font-size: 0.75rem;
+    }
+
+    .calendar-scale .rdp-head_cell {
+        font-size: 0.6rem;
+        padding: 0.1rem 0;
+    }
+}
+@media (max-width: 480px) {
+    .calendar-scale .rdp-day_button {
+        width: 0.9rem;
+        height: 0.9rem;
+        line-height: 0.9rem;
+    }
+
+    .calendar-scale .rdp-caption_label {
+        font-size: 0.8rem;
+    }
+}
+@media (min-width: 600px) {
+    .calendar-scale .rdp-day_button {
+        width: 1.2rem;
+        height: 1.2rem;
+        line-height: 1.2rem;
+    }
+
+    .calendar-scale .rdp-caption_label {
+        font-size: 1rem;
+    }
+
+    .calendar-scale .rdp-head_cell {
+        font-size: 0.85rem;
+    }
+}
