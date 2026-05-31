@@ -18,8 +18,8 @@ import {
     Cloud // <-- Tambahkan ini di sini biar tidak error uncaught lagi!
 } from 'lucide-react';
 import Sidebar from './SideBar.jsx';
-import Header from './header.jsx';
-import Footer from './footer';
+import Header from './Header.jsx';
+import Footer from './Footer';
 import AppSearchDropdown from './AppSearchDropdown.jsx';
 import { useAuth } from '../utils/auth.js';
 

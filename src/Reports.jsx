@@ -6,7 +6,7 @@ import LogoutAlert from "./logoutConfirm";
 import jsPDF from "jspdf";
 import CardDashboard from "./cardDashboard";
 import { useAuthAdmin } from '../utils/authadmin';
-import Footer from './footer';
+import Footer from './Footer';
 
 import autoTable from "jspdf-autotable";
 import * as XLSX from "xlsx";

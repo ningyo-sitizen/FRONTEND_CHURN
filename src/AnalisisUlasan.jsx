@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from './SideBar.jsx';
-import Header from './header.jsx';
+import Header from './Header.jsx';
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend,
     PieChart, Pie, Cell
 } from 'recharts';
-import Footer from './footer';
+import Footer from './Footer';
 import { useAuth } from "../utils/auth";
 import { useNotif } from "./NotificationContext";
 

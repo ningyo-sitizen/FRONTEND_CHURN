@@ -10,7 +10,7 @@ import { useAuth } from "../utils/auth";
 import { jwtDecode } from "jwt-decode";
 import { useNotif } from "./NotificationContext";
 import Header from './Header';
-import Footer from './footer';
+import Footer from './Footer';
 import Sidebar from './SideBar';
 import axios from 'axios';
 import { Loader2 } from 'lucide-react';
