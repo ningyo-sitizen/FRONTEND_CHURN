@@ -5,7 +5,7 @@ import ayoBergabung from './assets/Group 1000002792.png';
 import churnrate from './assets/Group 1000002793.png';
 import kotachurn from './assets/kotachurn.png';
 import logochurn from './assets/logo churn.png';
-import Footer from './footer';
+import Footer from './Footer';
 import { useLocation } from 'react-router-dom';
 import { CheckCircle2, X } from 'lucide-react';
 
