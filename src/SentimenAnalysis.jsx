@@ -80,7 +80,7 @@ const SentimenAnalysis = () => {
                 formData.append("app_id", selectedAppId);
             }
 
-            const response = await fetch("http://localhost:8002/sentimen/analyze-playstore", {
+            const response = await fetch(`${import.meta.env.VITE_SENTIMEN_API}/sentimen/analyze-playstore`, {
                 method: "POST",
                 body: formData
             });
@@ -140,7 +140,7 @@ const SentimenAnalysis = () => {
             const formData = new FormData();
             formData.append("file", selectedFile);
 
-            const response = await fetch("http://localhost:8002/sentimen/analyze-csv", {
+            const response = await fetch(`${import.meta.env.VITE_SENTIMEN_API}/sentimen/analyze-csv`, {
                 method: "POST",
                 body: formData
             });
@@ -222,7 +222,7 @@ const SentimenAnalysis = () => {
         setTextAnalysisLoading(true);
         setTextAnalysisResult(null);
         try {
-            const response = await fetch("http://localhost:8002/sentimen/analyze-text", {
+            const response = await fetch(`${import.meta.env.VITE_SENTIMEN_API}/sentimen/analyze-text`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ text: textInput.trim() })

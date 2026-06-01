@@ -13,7 +13,6 @@ const AppSearchDropdown = ({ value, onChange, onSelect, disabled }) => {
 
     // Debounced search
     useEffect(() => {
-        console.log(import.meta.env.VITE_SENTIMEN_API);
         if (searchTimeoutRef.current) {
             clearTimeout(searchTimeoutRef.current);
         }
