@@ -103,6 +103,7 @@ function Login() {
 
   // REMEMBER ME
   useEffect(() => {
+    console.log(`${import.meta.env.VITE_BACKEND_URL}`)
     const savedName = localStorage.getItem("remember_name");
     const savedPw = localStorage.getItem("remember_password");
 
@@ -114,6 +115,7 @@ function Login() {
   }, []);
 
   useEffect(() => {
+    
     const params = new URLSearchParams(window.location.search);
     const error = params.get("error");
 

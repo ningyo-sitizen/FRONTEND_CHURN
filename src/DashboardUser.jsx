@@ -248,7 +248,7 @@ const DashboardUser = () => {
             <main className="flex-1 h-full overflow-y-auto overflow-x-hidden">
 
                 {/* TOPBAR */}
-                <Header formData={user} profileImg={user?.profileImg} />
+                <Header formData={user} profileImg={user?.avatar} />
 
                 {/* CONTENT */}
                 <div className="p-8">
