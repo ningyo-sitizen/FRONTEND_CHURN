@@ -83,7 +83,7 @@ function LandingPage() {
               className="w-30 h-auto drop-shadow-lg"
             />
           </div>
-          <nav className="hidden md:flex gap-20 text-xs text-[#616161]">
+          <nav className="hidden md:flex gap-20 text-xs text-[20px] text-[#616161]">
             {[
               { name: "Home", link: "#home" },
               { name: "Tentang kami", link: "#about" },
@@ -102,7 +102,7 @@ function LandingPage() {
           </nav>
           <button
             onClick={() => navigate("/login")} // Ini yang mengarahkan ke page /login
-            className="bg-black text-white px-8 py-2 rounded-[4px] text-[13px] hover:bg-[#D82F5A] hover:shadow-lg hover:shadow-[#D82F5A]/20 transition-all duration-300 transform active:scale-95"
+            className="bg-black text-white px-8 py-2 rounded-[4px] text-[20px] hover:bg-[#D82F5A] hover:shadow-lg hover:shadow-[#D82F5A]/20 transition-all duration-300 transform active:scale-95"
           >
             Masuk
           </button>
@@ -124,7 +124,7 @@ function LandingPage() {
           </div>
 
           {/* Title */}
-          <h1 className="text-[32px] font-semibold leading-tight mb-4 tracking-tight text-gray-900">
+          <h1 className="text-[40px] font-semibold leading-tight mb-4 tracking-tight text-gray-900">
             Kuasai Retensi Pelanggan dengan <span className="text-[#D82F5A]">ChurnGuard CRM</span>
           </h1>
 
@@ -136,7 +136,7 @@ function LandingPage() {
           {/* Button */}
           <button
            onClick={() => navigate("/login")}
-           className="bg-black text-white px-4 py-3 rounded-[4px] text-sm shadow-xl hover:bg-[#D82F5A] transition-all duration-300 mb-10">
+           className="bg-black text-[25px] text-white px-4 py-3 rounded-[4px] text-sm shadow-xl hover:bg-[#D82F5A] transition-all duration-300 mb-10">
             Coba Sekarang
             <i className="ti ti-chevron-right ml-2"></i>
           </button>
