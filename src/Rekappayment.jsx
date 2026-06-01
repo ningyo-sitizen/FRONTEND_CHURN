@@ -6,7 +6,7 @@ import "react-day-picker/dist/style.css";
 import { IconSearch } from "@tabler/icons-react";
 import HeaderSA from './HeaderSA';
 import LogoutAlert from "./logoutConfirm";
-import Footer from "./footer";
+import Footer from "./Footer";
 import "./App.css";
 import axios from "axios";
 import { useAuthAdmin } from "../utils/authadmin";

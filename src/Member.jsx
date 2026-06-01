@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import Header from './header';
+import Header from './Header';
 import { useAuth } from '../utils/auth';
 import axios from 'axios';
-import Footer from './footer';
+import Footer from './Footer';
 
 const Member = () => {
     const user = useAuth();

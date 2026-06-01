@@ -5,7 +5,7 @@ import SidebarSA from "./sideBaradmin";
 import AppLayout from './AppLayout';
 import LogoutAlert from "./logoutConfirm";
 import HeaderSA from './HeaderSA';
-import Footer from "./footer";
+import Footer from "./Footer";
 import { useAuthAdmin } from "../utils/authadmin";
 import {
     IconBell,

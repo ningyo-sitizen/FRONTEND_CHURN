@@ -20,10 +20,10 @@ import {
   MessageCircle
 } from 'lucide-react';
 
-import Header from './header';
+import Header from './Header';
 import { useAuth } from '../utils/auth.js';
 import Sidebar from './SideBar.jsx';
-import Footer from './footer';
+import Footer from './Footer';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
