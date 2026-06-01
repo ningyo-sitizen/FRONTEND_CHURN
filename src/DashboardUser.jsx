@@ -268,7 +268,7 @@ const DashboardUser = () => {
                     {/* STAT CARD */}
                     <div className="bg-white rounded-[4px] border border-[#EDEDED] shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-7 mb-12">
                         {/* TOP ROW: Stats dengan warna & teks yang persis sesuai gambar */}
-                        <div className="flex flex-wrap md:flex-nowrap items-left justify-between gap-4 mb-5">
+                        <div className="flex flex-wrap md:flex-nowrap items-center justify-between gap-4 mb-5">
                             {[
                                 {
                                     label: "Tingkat Pengunduran Diri",
@@ -300,9 +300,9 @@ const DashboardUser = () => {
                                 }
                             ].map((item, idx) => (
                                 <React.Fragment key={idx}>
-                                    <div className="flex items-left gap-5 flex-1 min-w-[200px] px-4">
+                                    <div className="flex items-center gap-5 flex-1 min-w-[200px] px-4">
                                         {/* Icon Box */}
-                                        <div className={`w-10 h-10 rounded-[4px] flex justify-center text-2xl ${item.col}`}>
+                                        <div className={`w-10 h-10 rounded-[4px] flex items-center justify-center text-2xl ${item.col}`}>
                                             <i className={`ti ${item.icon}`}></i>
                                         </div>
 
@@ -322,8 +322,8 @@ const DashboardUser = () => {
                         </div>
 
                         {/* BOTTOM ROW: Analisis Note */}
-                        <div className="flex justify-between bg-gray-50/50 border border-[#DCDBDB] rounded-[4px] p-4 px-8 group cursor-pointer hover:bg-gray-50 transition-colors">
-                            <div className="flex gap-2 text-xs">
+                        <div className="flex items-center justify-between bg-gray-50/50 border border-[#DCDBDB] rounded-[4px] p-4 px-8 group cursor-pointer hover:bg-gray-50 transition-colors">
+                            <div className="flex items-center gap-2 text-xs">
                                 <span className="text-[#D82F5A] font-semibold">statistik</span>
                                 <span className="text-gray-400 text-xs">|</span>
                                 <span className="text-gray-600 text-xs">
@@ -331,7 +331,7 @@ const DashboardUser = () => {
                                 </span>
                             </div>
 
-                            <div className="flex gap-2 text-gray-400 group-hover:text-[#D82F5A] transition-colors text-xs">
+                            <div className="flex items-center gap-2 text-gray-400 group-hover:text-[#D82F5A] transition-colors text-xs">
                                 <span onClick={() => navigate('/analisisUlasan')}>Lihat detail analitik</span>
                                 <i className="ti ti-arrow-right"></i>
                             </div>
@@ -341,7 +341,7 @@ const DashboardUser = () => {
                     {/* TABLE */}
                     <div className="bg-white rounded-[4px] border border-[#ededed] overflow-hidden">
 
-                        <div className="p-6 flex justify-between">
+                        <div className="p-6 flex justify-between items-center">
 
                             <div>
 
@@ -364,7 +364,7 @@ const DashboardUser = () => {
                                             {/* Tombol Bulk Email */}
                                             <button
                                                 onClick={() => setShowBulkPopup(true)}
-                                                className="bg-[#D82F5A] hover:bg-[#E48CA3] text-xs text-white px-5 py-2 rounded-[4px] flex gap-2 transition-colors shadow-sm"
+                                                className="bg-[#D82F5A] hover:bg-[#E48CA3] text-xs text-white px-5 py-2 rounded-[4px] flex items-center gap-2 transition-colors shadow-sm"
                                             >
                                                 <i className="ti ti-mail-fast text-base"></i>
                                                 Bulk Email
@@ -373,7 +373,7 @@ const DashboardUser = () => {
                                             {/* Tombol Prediksi Baru */}
                                             <button
                                                 onClick={() => setShowPredictionPopup(true)}
-                                                className="bg-[#111827] hover:bg-gray-800 text-xs text-white px-4 py-1 rounded-[4px] flex gap-2 transition-colors shadow-sm"
+                                                className="bg-[#111827] hover:bg-gray-800 text-xs text-white px-4 py-1 rounded-[4px] flex items-center gap-2 transition-colors shadow-sm"
                                             >
                                                 <i className="ti ti-plus text-lg"></i>
                                                 Prediksi Baru
@@ -398,7 +398,7 @@ const DashboardUser = () => {
 
                                 ) : predictionData.length === 0 ? (
 
-                                    <div className="py-24 flex flex-col r">
+                                    <div className="py-24 flex flex-col items-center">
 
                                         <img
                                             src={unggahdata}
@@ -550,12 +550,12 @@ const DashboardUser = () => {
                                                                 </td>
 
                                                                 <td className="p-4 text-center">
-                                                                    <div className="group relative flex justify-center r">
+                                                                    <div className="group relative flex justify-center items-center">
                                                                         <button
                                                                             onClick={() =>
                                                                                 navigate(`/DashboardDetail?prediction_id=${item.prediction_id}&CustomerID=${item.CustomerID}`)
                                                                             }
-                                                                            className="p-2 text-[#D82F5A] hover:bg-[#FFE1E1] rounded-full transition-all duration-200 flex r justify-center"
+                                                                            className="p-2 text-[#D82F5A] hover:bg-[#FFE1E1] rounded-full transition-all duration-200 flex items-center justify-center"
                                                                         >
                                                                             {/* Icon panah ala 'next' */}
                                                                             <ChevronRight size={20} strokeWidth={2} />
@@ -580,12 +580,12 @@ const DashboardUser = () => {
                                         </div>
 
                                         {/* PAGINATION */}
-                                        <div className="flex justify-center r gap-2 mt-8 font-['Plus_Jakarta_Sans',_sans-serif]">
+                                        <div className="flex justify-center items-center gap-2 mt-8 font-['Plus_Jakarta_Sans',_sans-serif]">
                                             {/* Tombol Sebelumnya */}
                                             <button
                                                 disabled={page === 1}
                                                 onClick={() => setPage(page - 1)}
-                                                className={`flex r gap-2 px-3 py-1 text-sm transition-colors ${page === 1 ? "text-[#B3B3B3] cursor-not-allowed" : "text-[#757575] hover:text-[#D82F5A]"
+                                                className={`flex items-center gap-2 px-3 py-1 text-sm transition-colors ${page === 1 ? "text-[#B3B3B3] cursor-not-allowed" : "text-[#757575] hover:text-[#D82F5A]"
                                                     }`}
                                             >
                                                 <ChevronLeft size={18} strokeWidth={2.5} color={page === 1 ? "#B3B3B3" : "#D82F5A"} />
@@ -593,7 +593,7 @@ const DashboardUser = () => {
                                             </button>
 
                                             {/* Render Angka Halaman */}
-                                            <div className="flex  gap-1.5">
+                                            <div className="flex items-center gap-1.5">
                                                 {[...Array(totalPages)].map((_, index) => {
                                                     const pageNum = index + 1;
                                                     const isActive = page === pageNum;
@@ -602,7 +602,7 @@ const DashboardUser = () => {
                                                         <button
                                                             key={pageNum}
                                                             onClick={() => setPage(pageNum)}
-                                                            className={`w-9 h-9 flex  justify-center rounded-xl text-sm transition-all ${isActive
+                                                            className={`w-9 h-9 flex items-center justify-center rounded-xl text-sm transition-all ${isActive
                                                                 ? "bg-[#F6EAEC] text-[#D82F5A] border border-[#DE869D] font-bold shadow-sm"
                                                                 : "text-[#D82F5A] hover:bg-[#F6EAEC]/50 font-medium"
                                                                 }`}
@@ -617,7 +617,7 @@ const DashboardUser = () => {
                                             <button
                                                 disabled={page === totalPages}
                                                 onClick={() => setPage(page + 1)}
-                                                className={`flex  gap-2 px-3 py-1 text-sm transition-colors ${page === totalPages ? "text-[#B3B3B3] cursor-not-allowed" : "text-[#757575] hover:text-[#D82F5A]"
+                                                className={`flex items-center gap-2 px-3 py-1 text-sm transition-colors ${page === totalPages ? "text-[#B3B3B3] cursor-not-allowed" : "text-[#757575] hover:text-[#D82F5A]"
                                                     }`}
                                             >
                                                 <span className="font-medium text-[#757575]">Selanjutnya</span>
@@ -631,11 +631,11 @@ const DashboardUser = () => {
 
                     </div>
                     {showBulkPopup && (
-                        <div className="fixed inset-0 bg-[#1A1A1A]/60 backdrop-blur-sm flex justify-center  z-50 p-4 font-['Plus_Jakarta_Sans',_sans-serif]">
+                        <div className="fixed inset-0 bg-[#1A1A1A]/60 backdrop-blur-sm flex justify-center items-center z-50 p-4 font-['Plus_Jakarta_Sans',_sans-serif]">
                             <div className="bg-white rounded-[4px] w-full max-w-[1200px] shadow-xl overflow-hidden border border-gray-100">
 
                                 {/* HEADER */}
-                                <div className="px-6 py-5 border-b border-gray-100 flex justify-between  bg-white">
+                                <div className="px-6 py-5 border-b border-gray-100 flex justify-between items-center bg-white">
                                     <div>
                                         <h3 className="text-xl font-semibold mt-3 text-[#1A1A1A]">Strategi pertahankan pengguna</h3>
                                         <p className="text-[#757575] text-sm mt-1 font-medium">Atur promo spesial agar masing-masing kelompok pengguna berlangganan kembali.</p>
@@ -902,7 +902,7 @@ const DashboardUser = () => {
                                 </div>
 
                                 {/* FOOTER ACTION */}
-                                <div className="px-6 py-5 bg-white border-t border-gray-100 flex justify-end mb-3 gap-3">
+                                <div className="px-6 py-5 bg-white border-t border-gray-100 flex justify-end mb-3 items-center gap-3">
                                     <button
                                         onClick={() => setShowBulkPopup(false)}
                                         className="px-5 py-2 rounded-[4px] font-medium text-[#757575] bg-white border border-gray-200 hover:bg-gray-100 active:bg-gray-200 transition-all text-sm"
@@ -911,7 +911,7 @@ const DashboardUser = () => {
                                     </button>
                                     <button
                                         onClick={handleBulkEmail}
-                                        className="bg-[#1A1A1A] hover:bg-[#333333] active:scale-[0.98] text-white px-6 py-2 rounded-[4px] font-medium text-sm transition-all flex gap-2 shadow-sm"
+                                        className="bg-[#1A1A1A] hover:bg-[#333333] active:scale-[0.98] text-white px-6 py-2 rounded-[4px] font-medium text-sm transition-all flex items-center gap-2 shadow-sm"
                                     >
                                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m22 2-7 20-4-9-9-4Z" /><path d="M22 2 11 13" /></svg>
                                         <span>Kirim email ke semua</span>
@@ -923,13 +923,13 @@ const DashboardUser = () => {
                     {/* NEW PREDICTION POPUP */}
                     {
                         showPredictionPopup && (
-                            <div className="fixed inset-0 bg-black/40 backdrop-blur-[2px] flex justify-center z-50 p-4">
+                            <div className="fixed inset-0 bg-black/40 backdrop-blur-[2px] flex justify-center items-center z-50 p-4">
                                 <div className="bg-[#F9FAFB] rounded-[4px] w-full max-w-[400px] shadow-[0_10px_25px_-5px_rgba(0,0,0,0.1)] border border-[#EDEDED]">
 
                                     <div className="p-8">
                                         {/* Header Clean dengan Icon Kecil */}
-                                        <div className="flex gap-3 mb-4">
-                                            <div className="w-8 h-8 bg-white border border-[#EDEDED] rounded-[4px] flex justify-center shadow-sm">
+                                        <div className="flex items-center gap-3 mb-4">
+                                            <div className="w-8 h-8 bg-white border border-[#EDEDED] rounded-[4px] flex items-center justify-center shadow-sm">
                                                 <i className="ti ti-plus text-[#D82F5A] text-lg"></i>
                                             </div>
                                             <h2 className="text-sm font-bold text-gray-800 uppercase tracking-[1.5px]">
