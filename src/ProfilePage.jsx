@@ -71,6 +71,21 @@ const ProfilePage = () => {
 
   }, [user]);
 
+  const batalcrop = () => {
+    setShowCropModal(false)
+    setProfileImg(user?.avatar)
+  }
+
+  const batalsimpan = () => {
+    setIsEditing(false)
+    setFormData({
+      nama: user?.name || "",
+      perusahaan: user?.nama_perusahaan || "",
+      nama_app: user?.nama_app || "",
+      link_app: user?.link_app || ""
+    })
+
+  }
   const updateUserData = async () => {
     const token = localStorage.getItem("token");
 
@@ -214,8 +229,7 @@ const ProfilePage = () => {
             <div className="p-6 flex justify-end gap-2 bg-white">
 
               <button
-                onClick={() =>
-                  setShowCropModal(false)
+                onClick={() => batalcrop()
                 }
                 className="px-4 py-2 text-xs font-medium"
               >
@@ -285,7 +299,7 @@ const ProfilePage = () => {
 
                 <button
                   onClick={() =>
-                    setIsEditing(false)
+                    batalsimpan()
                   }
                   className="px-6 py-2.5 text-sm font-medium text-gray-500"
                 >
@@ -518,9 +532,9 @@ const ProfilePage = () => {
 
                 <button className="w-full flex items-center justify-between p-4 bg-pink-50 rounded-sm">
 
-                  <span className="text-xs font-semibold text-[#e11d48]">
+                  <a href="https://wa.me/087709999818" target='_blank'><span className="text-xs font-semibold text-[#e11d48]">
                     Hubungi Support
-                  </span>
+                  </span></a>
 
                   <MessageCircle
                     size={16}

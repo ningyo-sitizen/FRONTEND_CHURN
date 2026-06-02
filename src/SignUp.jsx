@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useNotif } from "./NotificationContext"
 import { Link } from "react-router-dom";
 import imgpnj from "./assets/logo_pnj.jpg";
-import { IconEye, IconEyeOff } from "@tabler/icons-react";
+import { IconEye, IconEyeOff, IconMail, IconLock, IconArrowLeft } from "@tabler/icons-react";
 
 function SignUp() {
     const { showNotif } = useNotif();
@@ -350,7 +350,14 @@ function SignUp() {
                                     </p>
                                 </div>
                             </div>
-
+                        <button
+                            type="button"
+                            onClick={() => navigate("/")}
+                            className="mt-4 flex items-center gap-2 text-xs text-gray-400 hover:text-[#D82F5A] transition-colors duration-200 group cursor-pointer"
+                        >
+                            <IconArrowLeft size={16} className="transform group-hover:-translate-x-0.5 transition-transform" />
+                            <span>Kembali ke Beranda</span>
+                        </button>
                         </div>
 
                     </div>
