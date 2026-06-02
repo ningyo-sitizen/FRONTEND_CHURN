@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useNotif } from "./NotificationContext";
-import { IconEye, IconEyeOff, IconMail, IconLock, IconArrowLeft } from "@tabler/icons-react";
+import { IconEye, IconEyeOff, IconMail, IconLock, IconArrowLeft} from "@tabler/icons-react";
+import { jwtDecode } from "jwt-decode";
+
 
 function Login() {
   const { showNotif } = useNotif();
@@ -48,7 +50,7 @@ function Login() {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/auth/login", {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -62,7 +64,7 @@ function Login() {
       const data = await res.json();
 
       if (!res.ok) {
-        setFailedLogin("*Email atau password salah");
+        setFailedLogin(data.message);
         return;
       }
 
@@ -78,7 +80,18 @@ function Login() {
 
       showNotif("success", "Login berhasil!");
 
-      navigate("/dashboardUser");
+
+      const decoded = jwtDecode(data.token);
+
+      console.log(decoded)
+
+
+      if (decoded.role === "admin") {
+        navigate("/dashboardSa", { replace: true });
+      } else {
+        navigate("/dashboardUser", { replace: true });
+      }
+
     } catch (err) {
       console.log("Login failed:", err);
 
@@ -90,6 +103,7 @@ function Login() {
 
   // REMEMBER ME
   useEffect(() => {
+    console.log(`${import.meta.env.VITE_BACKEND_URL}`)
     const savedName = localStorage.getItem("remember_name");
     const savedPw = localStorage.getItem("remember_password");
 
@@ -101,6 +115,7 @@ function Login() {
   }, []);
 
   useEffect(() => {
+    
     const params = new URLSearchParams(window.location.search);
     const error = params.get("error");
 
@@ -108,9 +123,14 @@ function Login() {
       console.log("User cancel login");
       window.close();
     }
-
+    const frontend_url = `${import.meta.env.VITE_BACKEND_URL}`
     const handleMessage = (event) => {
-      if (!event.origin.includes("localhost")) return;
+      if (
+        event.origin !== frontend_url &&
+        !event.origin.includes("railway.app")
+      ) {
+        return;
+      }
 
       const { token } = event.data;
 
@@ -123,6 +143,7 @@ function Login() {
       }
 
       if (event.data?.error) {
+        showNotif("err", event.data.error)
         console.log("Error:", event.data.error);
       }
     };
@@ -135,9 +156,8 @@ function Login() {
   }, [navigate]);
 
   return (
-    <main className="w-full min-h-screen font-jakarta mx-auto bg-gradient-to-b from-white to-[#F6EAEC] relative overflow-hidden">
-
-      {/* BACKGROUND GRID INDEPENDEN - Pas di tengah layar */}
+    <main className="w-full font-jakarta mx-auto bg-gradient-to-b from-white to-[#F6EAEC]">
+      {/* BACKGROUND */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
         w-[900px] h-[900px] 
         bg-[linear-gradient(rgba(0,0,0,0.04)_2px,transparent_2px),linear-gradient(90deg,rgba(0,0,0,0.04)_1px,transparent_1px)] 
@@ -191,7 +211,7 @@ function Login() {
         </section>
 
         {/* RIGHT SIDE (Card Login yang adaptif di Mobile & Desktop) */}
-        <div className="flex-1 flex flex-col justify-center items-center min-h-screen lg:ml-40 z-10 px-4 py-8 relative">
+        <div className="flex-1 flex flex-col justify-center items-center h-screen lg:ml-40 z-10 px-4 py-8 relative">
 
           {/* TOMBOL KEMBALI MOBILE (Hanya muncul di mobile/tablet < lg) */}
           <div className="w-full max-w-lg mb-4 flex lg:hidden">
