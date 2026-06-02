@@ -211,7 +211,7 @@ function Login() {
         </section>
 
         {/* RIGHT SIDE (Card Login yang adaptif di Mobile & Desktop) */}
-        <div className="flex-1 flex flex-col justify-center items-center min-h-screen lg:ml-40 z-10 px-4 py-8 relative">
+        <div className="flex-1 flex flex-col justify-center items-center h-screen lg:ml-40 z-10 px-4 py-8 relative">
 
           {/* TOMBOL KEMBALI MOBILE (Hanya muncul di mobile/tablet < lg) */}
           <div className="w-full max-w-lg mb-4 flex lg:hidden">
