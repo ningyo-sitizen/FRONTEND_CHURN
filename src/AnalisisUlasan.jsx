@@ -80,8 +80,8 @@ const AnalisisUlasan = () => {
 
             {/* Konten Utama */}
             <main className="flex-1 flex flex-col min-w-0 pb-20 lg:pb-0">
-                {/* Header Section dengan data user asli */}
-                <Header formData={user} profileImg={user?.profileImg} />
+                {/* Header Section - Menggunakan struktur properti yang sama seperti halaman Profile */}
+                <Header formData={user} profileImg={user?.image} />
 
                 {/* Wrapper Pembungkus Dashboard */}
                 <div className="p-4 lg:p-8 flex-1">
