@@ -156,7 +156,7 @@ function Login() {
   }, [navigate]);
 
   return (
-    <main className="w-full font-jakarta mx-auto bg-gradient-to-b from-white to-[#F6EAEC]">
+    <main className="w-full min-h-screen font-jakarta mx-auto bg-gradient-to-b from-white to-[#F6EAEC]">
       {/* BACKGROUND */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
         w-[900px] h-[900px] 
@@ -211,7 +211,7 @@ function Login() {
         </section>
 
         {/* RIGHT SIDE (Card Login yang adaptif di Mobile & Desktop) */}
-        <div className="flex-1 flex flex-col justify-center items-center h-screen lg:ml-40 z-10 px-4 py-8 relative">
+        <div className="flex-1 flex flex-col justify-center items-center min-h-screen lg:ml-40 z-10 px-4 py-8 relative">
 
           {/* TOMBOL KEMBALI MOBILE (Hanya muncul di mobile/tablet < lg) */}
           <div className="w-full max-w-lg mb-4 flex lg:hidden">
@@ -363,7 +363,7 @@ function Login() {
               {/* GOOGLE LOGIN */}
               <button
                 type="button"
-                onClick={() => openPopup("http://localhost:5000/auth/google/login")}
+                onClick={() => openPopup(`${import.meta.env.VITE_BACKEND_URL}/auth/google/login`)}
                 className="flex items-center justify-center gap-3 w-full border border-gray-300 bg-white rounded-lg p-3 text-gray-600 hover:bg-gray-50 hover:border-gray-400 transition"
               >
                 <svg width="18" height="18" viewBox="0 0 48 48">
