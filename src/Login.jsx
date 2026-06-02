@@ -156,7 +156,7 @@ function Login() {
   }, [navigate]);
 
   return (
-    <main className="w-full min-h-screen font-jakarta mx-auto bg-gradient-to-b from-white to-[#F6EAEC]">
+    <main className="w-full font-jakarta mx-auto bg-gradient-to-b from-white to-[#F6EAEC]">
       {/* BACKGROUND */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
         w-[900px] h-[900px] 
