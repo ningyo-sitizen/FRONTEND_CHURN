@@ -38,7 +38,7 @@ const Footer = () => {
           <h4 className="text-sm font-semibold mb-4 flex items-center gap-2 text-[#111827]">
             <i className="ti ti-phone text-[#D82F5A]"></i> No. Telepon
           </h4>
-          <p className="text-[#616161] text-[12px]">+62 21 727 0036</p>
+          <a href=''><p className="text-[#616161] text-[12px]">+6287709999818</p></a>
         </div>
 
         {/* EMAIL */}
@@ -46,9 +46,9 @@ const Footer = () => {
           <h4 className="text-sm font-semibold mb-4 flex items-center gap-2 text-[#111827]">
             <i className="ti ti-mail text-[#D82F5A]"></i> Email
           </h4>
-          <p className="text-[#616161] text-[12px] underline underline-offset-4 decoration-[#D82F5A]/30 hover:text-[#D82F5A] transition-colors cursor-pointer">
-            petisatukan@pnj.ac.id
-          </p>
+          <a href='mailto:jowymone26@email.com' target='_blank'><p className="text-[#616161] text-[12px] underline underline-offset-4 decoration-[#D82F5A]/30 hover:text-[#D82F5A] transition-colors cursor-pointer">
+            jowymone26@gmail.com
+          </p></a>
         </div>
       </div>
 

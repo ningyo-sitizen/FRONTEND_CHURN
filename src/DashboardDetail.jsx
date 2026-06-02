@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import { useAuth } from "../utils/auth";
 
 import logochurn from './assets/logo churn.png';
 
@@ -12,6 +13,7 @@ import {
 import Sidebar from "./SideBar";
 import Header from "./Header";
 export default function CostumerDetail() {
+    const user = useAuth()
     const [disableButton, setDisableButton] = useState(false);
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
@@ -83,6 +85,7 @@ export default function CostumerDetail() {
             );
 
             setEmailMessage(response.data.html);
+            setChatMessage(response.data.html)
             setShowPopup(false);
 
         } catch (err) {
@@ -131,7 +134,8 @@ export default function CostumerDetail() {
     }, []);
 
     const handleSendChat = async () => {
-
+        const token = localStorage.getItem('token')
+        console.log("kiana")
         try {
 
             await axios.post(
@@ -139,6 +143,11 @@ export default function CostumerDetail() {
                 {
                     html: chatMessage,
                     email: detail.email
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
                 }
             );
 
@@ -226,65 +235,7 @@ export default function CostumerDetail() {
             <main className="flex-grow flex flex-col">
 
                 {/* HEADER */}
-                <header className="h-20 bg-white border-b border-gray-100 flex items-center justify-end px-10 gap-6 sticky top-0 z-50">
-
-                    <div className="relative">
-
-                        <div
-                            className="flex items-center gap-3 cursor-pointer"
-                            onClick={() => setIsOpen(!isOpen)}
-                        >
-
-                            <img
-                                src="https://ui-avatars.com/api/?name=User&background=D82F5A&color=fff"
-                                className="w-10 h-10 rounded-xl"
-                                alt=""
-                            />
-
-                            <div>
-                                <p className="text-sm font-semibold">
-                                    Customer Analyst
-                                </p>
-
-                                <p className="text-xs text-[#D82F5A]">
-                                    admin@gmail.com
-                                </p>
-                            </div>
-
-                        </div>
-
-                        {
-                            isOpen && (
-
-                                <div className="absolute right-0 mt-4 w-72 bg-white rounded-[4px] shadow-xl border z-50">
-
-                                    <div className="p-2">
-
-                                        <div className="flex items-center gap-4 px-4 py-3 hover:bg-[#FEF5F6] rounded-xl cursor-pointer">
-                                            <IconUserCircle stroke={1.5} />
-                                            <span>Profile</span>
-                                        </div>
-
-                                        <div className="flex items-center gap-4 px-4 py-3 hover:bg-[#FEF5F6] rounded-xl cursor-pointer">
-                                            <IconBrandMyOppo stroke={1.5} />
-                                            <span>Member</span>
-                                        </div>
-
-                                        <div className="flex items-center gap-4 px-4 py-3 hover:bg-[#FEF5F6] rounded-xl cursor-pointer">
-                                            <IconLogout2 stroke={1.5} />
-                                            <span>Logout</span>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                            )
-                        }
-
-                    </div>
-
-                </header>
+                <Header formData={user} profileImg={user?.avatar} />
 
                 {/* CONTENT */}
                 <div className="p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-[1600px]">

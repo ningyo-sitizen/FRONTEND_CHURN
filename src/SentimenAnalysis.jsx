@@ -15,13 +15,13 @@ import {
     BarChart3,
     CloudLightning,
     CheckCircle2,
-    Cloud // <-- Tambahkan ini di sini biar tidak error uncaught lagi!
+    Cloud 
 } from 'lucide-react';
 import Sidebar from './SideBar.jsx';
 import Header from './Header.jsx';
 import Footer from './Footer';
-import AppSearchDropdown from './AppSearchDropdown.jsx';
 import { useAuth } from '../utils/auth.js';
+import AppSearchDropdown from './AppSearchDropdown.jsx';
 
 const SentimenAnalysis = () => {
     const user = useAuth()
@@ -29,17 +29,24 @@ const SentimenAnalysis = () => {
     const [searchApp, setSearchApp] = useState("");
     const [selectedAppId, setSelectedAppId] = useState(null);
     const [selectedFile, setSelectedFile] = useState(null);
-    const [startDate, setStartDate] = useState(""); // FIX: diubah ke string kosong agar input tanggal valid
+    const [startDate, setStartDate] = useState(""); 
     const [endDate, setEndDate] = useState(new Date().toISOString().split('T')[0]);
     const [currentPage, setCurrentPage] = useState(1);
     const [popup, setPopup] = useState({ show: false, type: 'success', title: '', message: '' });
-
 
     const [loading, setLoading] = useState(false);
     const [totalReviews, setTotalReviews] = useState(0);
     const [analysisResult, setAnalysisResult] = useState(null);
 
-    // ← BARU: State untuk mengontrol index accordion mana yang sedang terbuka
+    // State untuk tab utama halaman
+    const [activeMainTab, setActiveMainTab] = useState("massal");
+
+    // State untuk analisis teks manual
+    const [textInput, setTextInput] = useState("");
+    const [textAnalysisLoading, setTextAnalysisLoading] = useState(false);
+    const [textAnalysisResult, setTextAnalysisResult] = useState(null);
+
+    // State untuk mengontrol index accordion mana yang sedang terbuka
     const [openAccordionIdx, setOpenAccordionIdx] = useState(null);
 
     const [sentimentData, setSentimentData] = useState({
@@ -95,20 +102,18 @@ const SentimenAnalysis = () => {
                 setAnalysisResult(result);
                 setOpenAccordionIdx(null);
 
-                // GANTI ALERT JADI POP-UP CLEAN
                 setPopup({
                     show: true,
                     type: 'success',
                     title: 'Analisis Berhasil',
-                    message: `File ${selectedFile?.name} berhasil diproses. Ditemukan ${total.toLocaleString('id-ID')} baris data ulasan.`
+                    message: `File ${selectedFile?.name || searchApp} berhasil diproses. Ditemukan ${total.toLocaleString('id-ID')} baris data ulasan.`
                 });
             } else {
-                // GANTI ALERT ERROR JADI POP-UP
                 setPopup({
                     show: true,
                     type: 'error',
                     title: 'Analisis Gagal',
-                    message: result.message || 'Terjadi kesalahan saat memproses file.'
+                    message: result.message || 'Terjadi kesalahan saat memproses data.'
                 });
             }
         } catch (err) {
@@ -118,10 +123,11 @@ const SentimenAnalysis = () => {
             setLoading(false);
         }
     };
+
     const handleDownloadTemplate = () => {
         console.log("Template diunduh");
-        // nanti tinggal isi logic download file disini kalau sudah ada file template-nya
     };
+
     // Analisis dari File CSV
     const handleAnalyzeFile = async () => {
         if (!selectedFile) {
@@ -154,8 +160,14 @@ const SentimenAnalysis = () => {
                 setTopWords(result.top_words || {});
                 setTotalReviews(total);
                 setAnalysisResult(result);
-                setOpenAccordionIdx(null); // Tutup accordion jika ada analisis baru
-                alert(`✅ Analisis file berhasil!\n📄 File: ${selectedFile.name}\n📊 Total: ${total} reviews`);
+                setOpenAccordionIdx(null); 
+                
+                setPopup({
+                    show: true,
+                    type: 'success',
+                    title: 'Analisis Berhasil',
+                    message: `File ${selectedFile.name} berhasil diproses. Ditemukan ${total.toLocaleString('id-ID')} baris data ulasan.`
+                });
             } else {
                 alert(`❌ Error: ${result.message}`);
             }
@@ -204,6 +216,56 @@ const SentimenAnalysis = () => {
         return ((sentimentData[sentiment] / totalReviews) * 100).toFixed(1);
     };
 
+    // Analisis teks manual via FastAPI backend
+    const handleAnalyzeText = async () => {
+        if (!textInput.trim()) return;
+        setTextAnalysisLoading(true);
+        setTextAnalysisResult(null);
+        try {
+            const response = await fetch(`${import.meta.env.VITE_SENTIMEN_API}/sentimen/analyze-text`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ text: textInput.trim() })
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const result = await response.json();
+
+            if (result.status === "success") {
+                setTextAnalysisResult({
+                    text: result.text,
+                    sentiment: result.sentiment  // "positif" | "netral" | "negatif"
+                });
+            } else {
+                setPopup({
+                    show: true,
+                    type: "error",
+                    title: "Analisis Gagal",
+                    message: result.message || "Terjadi kesalahan saat memproses teks."
+                });
+            }
+        } catch (err) {
+            console.error("Text analysis error:", err);
+            setPopup({
+                show: true,
+                type: "error",
+                title: "Analisis Gagal",
+                message: `Koneksi Error: ${err.message}. Pastikan Python API berjalan di port 8002.`
+            });
+        } finally {
+            setTextAnalysisLoading(false);
+        }
+    };
+
+    const TEXT_SAMPLES = {
+        positif: "Aplikasi ini benar-benar luar biasa! Desainnya sangat bersih dan intuitif, performanya cepat, dan fitur-fiturnya sangat lengkap. Saya sangat puas dan akan terus menggunakannya. Highly recommended!",
+        netral: "Aplikasi ini cukup standar. Fiturnya ada, tidak ada yang spesial, tapi juga tidak ada yang mengecewakan. Penggunaannya lumayan mudah dipahami.",
+        negatif: "Sangat mengecewakan! Aplikasi sering crash dan loading-nya sangat lambat. Banyak fitur tidak berfungsi dengan baik. Support customer service juga tidak responsif."
+    };
+
     return (
         <div className="flex h-screen w-screen bg-[#F9FAFB] font-['Plus_Jakarta_Sans',sans-serif] overflow-hidden">
             <style>{`
@@ -217,26 +279,21 @@ const SentimenAnalysis = () => {
         }
     `}</style>
 
-            {/* 1. Sidebar - Sekarang dijamin ngunci full dari atas sampai bawah layar monitor */}
-            {/* 1. Sidebar - Sekarang dijamin ngunci full dari atas sampai bawah layar monitor */}
             <Sidebar />
 
-            {/* KONTROLLER UTAMA: Menggunakan h-full dan overflow-y-auto agar area kanan ini saja yang menjadi wadah scroll */}
             <div className="flex-1 min-w-0 max-w-full flex flex-col h-full overflow-y-auto overflow-x-hidden">
 
-                {/* FIX FINAL: Pakai kombinasi w-0 min-w-full relative. Ini bakal maksa Header muat di layar tanpa menyembunyikan dropdown klik-an lu */}
                 <div className="relative w-0 min-w-full shrink-0 pr-4">
                     <Header formData={user} profileImg={user?.avatar} />
                 </div>
 
-                {/* MAIN CONTAINER: Menghapus overflow-hidden bawaan sebelumnya agar komponen di bawahnya bisa manjang bebas ke bawah */}
                 <main className="p-4 sm:p-6 lg:p-8 w-full max-w-none mx-auto flex-grow min-w-0 flex-shrink space-y-6">
 
-                    {/* Header Judul */}
+                    {/* Header Judul + Tab Switcher */}
                     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 w-full">
                         <div>
                             <h1 className="text-xl font-semibold text-[#111827]">Respon Pelanggan</h1>
-                            <p className="text-sm text-gray-500 mt-1 flex items-center gap-2">
+                            <p className="text-sm text-gray-500 mt-1">
                                 Tidak perlu baca ribuan ulasan di Play Store. Langsung intip apa yang diinginkan penontonmu sekarang!
                             </p>
                         </div>
@@ -248,12 +305,35 @@ const SentimenAnalysis = () => {
                             export data
                         </button>
                     </div>
+
+                    {/* Tab Switcher Utama */}
+                    <div className="flex items-center gap-1 bg-white border border-slate-100 rounded-[4px] p-1 w-fit shadow-sm mb-6">
+                        {[
+                            { key: "massal", label: "Analisis Massal", icon: <BarChart3 size={13} /> },
+                            { key: "teks", label: "Analisis Teks", icon: <FileText size={13} /> }
+                        ].map((tab) => (
+                            <button
+                                key={tab.key}
+                                onClick={() => setActiveMainTab(tab.key)}
+                                className={`flex items-center gap-2 px-4 py-2 rounded-[4px] text-xs font-semibold transition-all ${activeMainTab === tab.key
+                                    ? "bg-[#d82f5a] text-white shadow-sm"
+                                    : "text-slate-500 hover:text-slate-700 hover:bg-slate-50"
+                                }`}
+                            >
+                                {tab.icon}
+                                {tab.label}
+                            </button>
+                        ))}
+                    </div>
+
+                    {activeMainTab === "massal" && (
+                    <>
                     <div className="w-full bg-white rounded-[4px] p-4 shadow-sm border border-slate-100 space-y-4 min-w-0 font-jakarta">
 
                         {/* 1. SEKSI INPUT FILTER */}
                         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-12 gap-3 items-stretch w-full">
 
-                            {/* COLUMN 1: Dropdown Pencarian Aplikasi (Dipaksa h-11 menggunakan flex items-stretch) */}
+                            {/* COLUMN 1: Dropdown Pencarian Aplikasi */}
                             <div className="grid-cols-1 lg:col-span-4 flex items-stretch w-full min-w-0 text-xs font-medium text-slate-600">
                                 <AppSearchDropdown
                                     value={searchApp}
@@ -266,8 +346,6 @@ const SentimenAnalysis = () => {
                                         setSelectedAppId(app.appId);
                                     }}
                                     disabled={loading}
-                                // OPSI A: Jika komponen lu mendukung className untuk styling luar, buka komen di bawah:
-                                // className="w-full !h-11 rounded-[4px]"
                                 />
                             </div>
 
@@ -352,6 +430,7 @@ const SentimenAnalysis = () => {
                             </button>
                         </div>
                     </div>
+                    
                     {/* POP-UP LOADING OVERLAY SCREEN */}
                     {loading && (
                         <div className="fixed inset-0 bg-slate-900/40 z-[9999] flex items-center justify-center animate-in fade-in duration-300">
@@ -429,9 +508,6 @@ const SentimenAnalysis = () => {
                     )}
 
                     {/* ==================== KARTU METRIK RASIO (BAGIAN ATAS) ==================== */}
-                    {/* ========================================================================= */}
-                    {/* SECTION 1: TOP INSIGHTS (METRICS & CHART)                                 */}
-                    {/* ========================================================================= */}
                     <div className="flex flex-col lg:flex-row gap-6 items-stretch w-full mb-6">
 
                         {/* Kiri: Tiga Kartu Metrik - Border Radius 4px */}
@@ -472,7 +548,6 @@ const SentimenAnalysis = () => {
                                         <p className="text-[10px] text-slate-400 font-medium mt-0.5">Persentase total sebaran data</p>
                                     </div>
                                 </div>
-                                {/* Badge Kanan Atas disesuaikan jadi Kotak 4px */}
                                 <span className="text-[10px] font-semibold text-rose-600 bg-rose-50/80 px-3 py-1 rounded-[4px] border border-rose-100 shadow-3xs select-none">
                                     Total: {totalReviews} Data Aplikasi
                                 </span>
@@ -807,6 +882,186 @@ const SentimenAnalysis = () => {
                             <p className="text-[11px] text-slate-400 font-medium max-w-sm mt-1 leading-relaxed">
                                 Silakan masukkan nama aplikasi atau unggah dokumen berkstensi CSV terlebih dahulu untuk melihat ulasan streaming para penonton.
                             </p>
+                        </div>
+                    )}
+                    </>
+                    )} {/* END activeMainTab === "massal" */}
+
+                    {/* ============================================================== */}
+                    {/* TAB ANALISIS TEKS MANUAL                                       */}
+                    {/* ============================================================== */}
+                    {activeMainTab === "teks" && (
+                        <div className="space-y-5 font-jakarta">
+
+                            {/* Panel Input */}
+                            <div className="bg-white rounded-[4px] border border-slate-100 shadow-sm p-5">
+                                <div className="flex items-center justify-between mb-3">
+                                    <div className="flex items-center gap-2.5">
+                                        <div className="w-7 h-7 rounded-[4px] bg-rose-50 border border-rose-100 flex items-center justify-center">
+                                            <FileText size={13} className="text-[#d82f5a]" />
+                                        </div>
+                                        <div>
+                                            <p className="text-xs font-semibold text-slate-800 tracking-tight">Teks yang akan dianalisis</p>
+                                            <p className="text-[10px] text-slate-400 font-medium">Tulis atau tempel teks ulasan di bawah ini</p>
+                                        </div>
+                                    </div>
+                                    <span className="text-[10px] font-medium text-slate-400">{textInput.length} / 2000</span>
+                                </div>
+
+                                <textarea
+                                    value={textInput}
+                                    onChange={(e) => setTextInput(e.target.value.slice(0, 2000))}
+                                    rows={7}
+                                    placeholder='Tulis atau tempel teks di sini... Contoh: "Aplikasi ini sangat membantu dan mudah digunakan, tapi kadang agak lambat."'
+                                    className="w-full resize-none border border-slate-200 rounded-[4px] px-4 py-3 text-[12px] text-slate-700 font-medium leading-relaxed placeholder:text-slate-300 focus:outline-none focus:border-[#d82f5a] transition-colors font-jakarta"
+                                />
+
+                                <div className="flex items-center justify-between mt-3 gap-3 flex-wrap">
+                                    <div className="flex items-center gap-2 flex-wrap">
+                                        {[
+                                            { key: "positif", label: "Contoh positif", icon: <Smile size={11} /> },
+                                            { key: "netral", label: "Contoh netral", icon: <Meh size={11} /> },
+                                            { key: "negatif", label: "Contoh negatif", icon: <Frown size={11} /> },
+                                        ].map((s) => (
+                                            <button
+                                                key={s.key}
+                                                onClick={() => setTextInput(TEXT_SAMPLES[s.key])}
+                                                className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-[4px] text-[10px] font-semibold text-slate-500 hover:text-slate-700 transition-all"
+                                            >
+                                                {s.icon}
+                                                {s.label}
+                                            </button>
+                                        ))}
+                                        {textInput && (
+                                            <button
+                                                onClick={() => { setTextInput(""); setTextAnalysisResult(null); }}
+                                                className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-[4px] text-[10px] font-semibold text-slate-400 hover:text-slate-600 transition-all"
+                                            >
+                                                <AlertCircle size={11} />
+                                                Hapus
+                                            </button>
+                                        )}
+                                    </div>
+                                    <button
+                                        onClick={handleAnalyzeText}
+                                        disabled={!textInput.trim() || textAnalysisLoading}
+                                        className="flex items-center gap-2 px-5 py-2 bg-[#d82f5a] hover:bg-[#bd244b] disabled:opacity-50 disabled:cursor-not-allowed text-white text-[11px] font-semibold rounded-[4px] transition-all active:scale-[0.98] shadow-sm"
+                                    >
+                                        {textAnalysisLoading
+                                            ? <><Loader2 size={12} className="animate-spin" /> Menganalisis...</>
+                                            : <><Play size={10} fill="currentColor" /> Analisis Sentimen</>
+                                        }
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Hasil Analisis */}
+                            {textAnalysisLoading && (
+                                <div className="bg-white rounded-[4px] border border-slate-100 p-10 flex flex-col items-center justify-center gap-3 text-center shadow-sm">
+                                    <Loader2 size={28} className="animate-spin text-[#d82f5a]" />
+                                    <div>
+                                        <p className="text-xs font-semibold text-slate-700">Menganalisis sentimen...</p>
+                                        <p className="text-[10px] text-slate-400 mt-0.5 font-medium">Memproses teks ke server analisis...</p>
+                                    </div>
+                                </div>
+                            )}
+
+                            {textAnalysisResult && !textAnalysisLoading && (() => {
+                                const r = textAnalysisResult;
+                                const sent = r.sentiment || "netral";
+                                const sentColor = sent === "positif" ? "#059669" : sent === "negatif" ? "#d82f5a" : "#d97706";
+                                const sentBg   = sent === "positif" ? "#ecfdf5" : sent === "negatif" ? "#fff1f4" : "#fffbeb";
+                                const sentBorder = sent === "positif" ? "#a7f3d0" : sent === "negatif" ? "#fecdd3" : "#fde68a";
+                                const sentEmoji  = sent === "positif" ? "😊" : sent === "negatif" ? "😞" : "😐";
+                                const SentIcon   = sent === "positif" ? Smile : sent === "negatif" ? Frown : Meh;
+
+                                const SENTIMENT_ITEMS = [
+                                    { key: "positif", label: "Positif", color: "#059669", bg: "#ecfdf5", border: "#d1fae5", icon: <Smile size={16} /> },
+                                    { key: "netral",  label: "Netral",  color: "#d97706", bg: "#fffbeb", border: "#fde68a", icon: <Meh   size={16} /> },
+                                    { key: "negatif", label: "Negatif", color: "#d82f5a", bg: "#fff1f4", border: "#ffe4e8", icon: <Frown  size={16} /> },
+                                ];
+
+                                return (
+                                    <div className="space-y-4">
+                                        {/* Header Hasil */}
+                                        <div className="flex items-center gap-2.5 px-1">
+                                            <div className="w-6 h-6 rounded-[4px] bg-emerald-50 border border-emerald-100 flex items-center justify-center">
+                                                <CheckCircle2 size={12} className="text-emerald-500" />
+                                            </div>
+                                            <div>
+                                                <p className="text-xs font-semibold text-slate-800 tracking-tight">Hasil Analisis Sentimen</p>
+                                                <p className="text-[10px] text-slate-400 font-medium">Prediksi model berhasil diproses</p>
+                                            </div>
+                                        </div>
+
+                                        {/* Sentimen Utama */}
+                                        <div
+                                            className="rounded-[4px] border p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                                            style={{ background: sentBg, borderColor: sentBorder }}
+                                        >
+                                            <div className="flex items-center gap-4">
+                                                <div
+                                                    className="w-12 h-12 rounded-[4px] flex items-center justify-center flex-shrink-0 border"
+                                                    style={{ background: "white", borderColor: sentBorder }}
+                                                >
+                                                    <SentIcon size={22} style={{ color: sentColor }} />
+                                                </div>
+                                                <div>
+                                                    <p className="text-[9px] font-bold uppercase tracking-wider text-slate-400 mb-1">Sentimen Terdeteksi</p>
+                                                    <p className="text-2xl font-bold capitalize" style={{ color: sentColor, letterSpacing: "-0.01em" }}>
+                                                        {sent}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <span className="text-4xl select-none" role="img" aria-label={sent}>{sentEmoji}</span>
+                                        </div>
+
+                                        {/* Teks Dianalisis */}
+                                        <div className="bg-slate-50 rounded-[4px] border border-slate-100 p-4">
+                                            <p className="text-[9px] font-bold uppercase tracking-wider text-slate-400 mb-2.5">Teks yang Dianalisis</p>
+                                            <p className="text-[12px] text-slate-600 font-medium leading-relaxed line-clamp-5 italic">
+                                                &ldquo;{r.text}&rdquo;
+                                            </p>
+                                        </div>
+
+                                        {/* Indikator Tiga Kelas */}
+                                        <div className="grid grid-cols-3 gap-3">
+                                            {SENTIMENT_ITEMS.map((item) => {
+                                                const isActive = item.key === sent;
+                                                return (
+                                                    <div
+                                                        key={item.key}
+                                                        className="flex flex-col items-center gap-2 p-3.5 rounded-[4px] border transition-all"
+                                                        style={{
+                                                            background: isActive ? item.bg : "white",
+                                                            borderColor: isActive ? item.border : "#f1f5f9",
+                                                            opacity: isActive ? 1 : 0.45
+                                                        }}
+                                                    >
+                                                        <div style={{ color: item.color }}>{item.icon}</div>
+                                                        <p className="text-[10px] font-semibold text-slate-600">{item.label}</p>
+                                                        {isActive && (
+                                                            <CheckCircle2 size={11} style={{ color: item.color }} />
+                                                        )}
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                );
+                            })()}
+
+                            {!textAnalysisResult && !textAnalysisLoading && (
+                                <div className="bg-white border border-dashed border-slate-200 rounded-[4px] p-12 text-center flex flex-col items-center justify-center">
+                                    <div className="w-12 h-12 rounded-[4px] bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-300 mb-4">
+                                        <CloudLightning size={20} className="stroke-[1.8]" />
+                                    </div>
+                                    <p className="text-xs font-semibold text-slate-600 tracking-tight">Hasil analisis akan muncul di sini</p>
+                                    <p className="text-[11px] text-slate-400 font-medium max-w-xs mt-1 leading-relaxed">
+                                        Masukkan teks di atas lalu klik tombol <span className="font-semibold text-[#d82f5a]">Analisis Sentimen</span> untuk memulai
+                                    </p>
+                                </div>
+                            )}
                         </div>
                     )}
                 </main>
