@@ -300,7 +300,7 @@ function SignUp() {
                         <div className="bg-[url('https://cdn.designfast.io/image/2026-05-01/ba3f37fa-e105-4c2b-b1e9-2f72ab10513a.png')] w-[90px] h-[90px] bg-cover bg-center absolute top-[30px]"></div>
 
                         {/* TAGLINE */}
-                        <p className="text-sm text-[#D82F5A] bg-[#FEF5F6] border border-[#D82F5A] px-4 py-1 rounded-full">
+                        <p className="text-sm text-[#D82F5A] bg-[#FEF5F6] border border-[#D82F5A] mt-8 px-4 py-1 rounded-full">
                             Predict the Unpredictable
                         </p>
 

@@ -32,13 +32,9 @@ const AnalisisUlasan = () => {
     const [riskData, setRiskData] = useState([]);
     const [subscriptionData, setSubscriptionData] = useState([]);
     const [segmentData, setSegmentData] = useState([]);
-    const [ageData, setAgeData] = useState([]);
-    const [clusterData, setClusterData] = useState([]);
-    const [contentTypeData, setContentTypeData] = useState([]);
-    const [chargesData, setChargesData] = useState([]);
-    const [fileName, setFileName] = useState();
     const [genreData, setGenreData] = useState([]);
     const [subscriptionRevenueData, setSubscriptionRevenueData] = useState([]);
+    const [fileName, setFileName] = useState("");
 
     useEffect(() => {
         fetchAnalytics();
@@ -79,19 +75,19 @@ const AnalisisUlasan = () => {
 
     return (
         <div className="flex flex-col lg:flex-row min-h-screen bg-[#F9FAFB] font-['Plus_Jakarta_Sans',sans-serif]">
-            {/* Sidebar otomatis menyesuaikan diri (jadi bottom nav di HP) */}
+            {/* Sidebar otomatis menyesuaikan diri */}
             <Sidebar />
 
-            {/* pb-20 dipasang agar konten terbawah tidak terpotong oleh bottom nav di mobile */}
+            {/* Konten Utama */}
             <main className="flex-1 flex flex-col min-w-0 pb-20 lg:pb-0">
                 {/* Header Section dengan data user asli */}
                 <Header formData={user} profileImg={user?.profileImg} />
 
-                {/* Padding mengecil di mobile (p-4) dan melebar di desktop (lg:p-8) */}
+                {/* Wrapper Pembungkus Dashboard */}
                 <div className="p-4 lg:p-8 flex-1">
                     {/* JUDUL DAN SUBJUDUL HALAMAN */}
                     <div className="mb-6 lg:mb-8">
-                        <h1 className="text-xl lg:text-2xl font-semibold text-gray-800">Analisis Statistik Pelanggan</h1>
+                        <h1 className="text-xl lg:text-xl font-semibold text-gray-800">Analisis Statistik Pelanggan</h1>
                         <p className="text-xs lg:text-sm text-gray-400 mt-1">
                             Visualisasi data churn customer dan insight bisnis secara real-time.
                         </p>
@@ -108,10 +104,10 @@ const AnalisisUlasan = () => {
                         <span className="text-xs text-gray-400">{stats.totalCustomer.toLocaleString()} Data terdeteksi</span>
                     </div>
 
-                    {/* Stats Cards dengan Grid System Responsive */}
-                    <div className="bg-white rounded-[4px] border border-[#EDEDED] shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-4 lg:p-7 mb-8 lg:mb-12">
-                        {/* Menggunakan grid: 2 kolom di HP, 3 kolom di tablet, 5 kolom di desktop */}
-                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-y-6 gap-x-2 items-center justify-between mb-5">
+                    {/* STATS CARDS - DIJAMIN SATU BARIS HORIZONTAL PRESETS */}
+                    <div className="bg-white rounded-[4px] border border-[#EDEDED] shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-4 lg:p-6 mb-8 lg:mb-12">
+                        {/* Flexbox row no-wrap memaksa semua kartu berjajar lurus ke samping tanpa patah ke bawah */}
+                        <div className="flex flex-row items-center justify-between gap-4 overflow-x-auto pb-4 lg:pb-0 scrollbar-none">
                             {[
                                 {
                                     label: "Total Pelanggan",
@@ -145,23 +141,28 @@ const AnalisisUlasan = () => {
                                 }
                             ].map((item, idx, arr) => (
                                 <React.Fragment key={idx}>
-                                    <div className="flex items-center gap-3 lg:gap-5 px-1 lg:px-4">
+                                    {/* Setiap item membagi ruang setara dan aman di layar desktop */}
+                                    <div className="flex items-center gap-3 lg:gap-4 flex-1 min-w-[160px] justify-start px-2">
                                         <div className={`w-9 h-9 lg:w-10 lg:h-10 rounded-[4px] flex items-center justify-center text-xl lg:text-2xl shrink-0 ${item.col}`}>
                                             <i className={`ti ${item.icon}`}></i>
                                         </div>
                                         <div className="flex flex-col min-w-0">
-                                            <p className="text-[10px] lg:text-xs text-gray-400 truncate" title={item.label}>{item.label}</p>
-                                            <p className="text-sm lg:text-base font-semibold text-gray-800 truncate">{item.val}</p>
+                                            <p className="text-[10px] lg:text-xs text-gray-400 whitespace-nowrap overflow-hidden text-ellipsis" title={item.label}>
+                                                {item.label}
+                                            </p>
+                                            <p className="text-sm lg:text-base font-semibold text-gray-800 truncate">
+                                                {item.val}
+                                            </p>
                                         </div>
                                     </div>
-                                    {/* Divider hanya muncul di layar besar desktop */}
-                                    {idx !== arr.length - 1 && <div className="hidden lg:block w-[1px] h-12 bg-gray-100"></div>}
+                                    {/* Garis pembatas vertikal antar kartu (hilang di kartu terakhir) */}
+                                    {idx !== arr.length - 1 && <div className="w-[1px] h-10 bg-gray-100 shrink-0"></div>}
                                 </React.Fragment>
                             ))}
                         </div>
 
-                        {/* Analisis Note Design (FIXED: Duplikasi kata 'border' telah dihapus) */}
-                        <div className="flex items-center justify-between bg-gray-50/50 border border-[#DCDBDB] rounded-[4px] p-3 lg:p-4 px-4 lg:px-8 group cursor-pointer hover:bg-gray-50 transition-colors">
+                        {/* Analisis Note Design - FIXED CSS CONFLICT (Duplikasi Border Dihapus) */}
+                        <div className="flex items-center justify-between bg-gray-50/50 border border-[#DCDBDB] rounded-[4px] p-3 lg:p-4 px-4 lg:px-8 mt-5 group cursor-pointer hover:bg-gray-50 transition-colors">
                             <div className="flex items-center gap-2 text-[11px] lg:text-xs">
                                 <span className="text-[#D82F5A] font-semibold whitespace-nowrap">Dashboard Data Insight</span>
                                 <span className="text-gray-400">|</span>
@@ -172,12 +173,13 @@ const AnalisisUlasan = () => {
                         </div>
                     </div>
 
-                    {/* Main Charts - Grid Layout */}
+                    {/* MAIN CHARTS AREA */}
                     <div>
-                        {/* GRID BARIS 1: Langganan vs Prediksi Churn & Distribusi Risiko */}
+                        {/* BARIS UTAMA GRAFIK: Langganan & Distribusi Risiko */}
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-6 lg:mb-12 items-stretch">
+                            
                             {/* Bar Chart Section */}
-                            <div className="col-span-1 lg:col-span-8 bg-white p-4 lg:p-6 pb-6 rounded-[4px] border border-gray-100 shadow-sm flex flex-col justify-between h-full">
+                            <div className="col-span-1 lg:col-span-8 bg-white p-4 lg:p-6 rounded-[4px] border border-gray-100 shadow-sm flex flex-col justify-between">
                                 <div>
                                     <div className="flex flex-col sm:flex-row justify-between items-start gap-2 mb-4">
                                         <div>
@@ -196,7 +198,8 @@ const AnalisisUlasan = () => {
                                         </div>
                                     </div>
 
-                                    <div className="h-[200px] flex items-end mt-6 w-full">
+                                    {/* Tinggi container grafik di-lock agar seimbang */}
+                                    <div className="h-[260px] w-full mt-2">
                                         <ResponsiveContainer width="100%" height="100%">
                                             <BarChart data={subscriptionData} margin={{ top: 10, right: 5, left: -25, bottom: 0 }}>
                                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F3F4F6" />
@@ -226,15 +229,16 @@ const AnalisisUlasan = () => {
                             </div>
 
                             {/* Pie Chart Section */}
-                            <div className="col-span-1 lg:col-span-4 bg-white p-4 lg:p-6 pb-6 rounded-[4px] border border-gray-100 shadow-sm flex flex-col justify-between h-full">
+                            <div className="col-span-1 lg:col-span-4 bg-white p-4 lg:p-6 rounded-[4px] border border-gray-100 shadow-sm flex flex-col justify-between">
                                 <div>
                                     <h3 className="text-sm font-semibold mb-1 text-[#111827]">Distribusi Risiko</h3>
                                     <p className="text-[10px] text-gray-400 mb-4">Sebaran pelanggan berdasarkan tingkat risiko</p>
 
-                                    <div className="h-44 flex items-center justify-center mt-6">
+                                    {/* Tinggi kontainer pie diselaraskan dengan bar chart */}
+                                    <div className="h-[260px] w-full flex items-center justify-center">
                                         <ResponsiveContainer width="100%" height="100%">
                                             <PieChart>
-                                                <Pie data={riskData} innerRadius={55} outerRadius={75} paddingAngle={4} dataKey="value">
+                                                <Pie data={riskData} innerRadius={60} outerRadius={85} paddingAngle={4} dataKey="value">
                                                     {riskData.map((entry, index) => (
                                                         <Cell key={`cell-${index}`} fill={COLORS_PIE[index % COLORS_PIE.length]} />
                                                     ))}
@@ -258,7 +262,8 @@ const AnalisisUlasan = () => {
                                     </div>
                                 </div>
 
-                                <div className="flex flex-wrap items-center justify-start gap-x-3 gap-y-1.5 mt-4 text-[10px] lg:text-[11px] text-gray-500 font-medium pl-1">
+                                {/* Legenda Pie Chart */}
+                                <div className="flex flex-wrap items-center justify-start gap-x-3 gap-y-1.5 mt-2 text-[10px] lg:text-[11px] text-gray-500 font-medium pl-1">
                                     {riskData.map((item, i) => (
                                         <span key={i} className="flex items-center gap-1">
                                             <div
@@ -273,7 +278,7 @@ const AnalisisUlasan = () => {
                             </div>
                         </div>
 
-                        {/* GRID BARIS 2: Analisis Preferensi Genre & Kerugian Pendapatan */}
+                        {/* SECONDARY CHARTS AREA: Preferensi Genre & Kerugian Pendapatan */}
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12 items-stretch">
                             {/* Genre Chart */}
                             <div className="col-span-1 lg:col-span-6 bg-white p-4 lg:p-6 pb-6 rounded-[4px] border border-gray-100 shadow-sm flex flex-col justify-between h-full">
@@ -347,9 +352,8 @@ const AnalisisUlasan = () => {
                         </div>
                     </div>
 
-                    {/* Segment Insight Section */}
+                    {/* SEGMENT INSIGHT SECTION */}
                     <div className="mb-8">
-                        {/* Header Segment */}
                         <div className="mb-5 flex items-center justify-between">
                             <div>
                                 <h3 className="text-base font-semibold text-gray-950 tracking-tight">Segment insight</h3>
@@ -360,14 +364,13 @@ const AnalisisUlasan = () => {
                             </span>
                         </div>
 
-                        {/* List Container Memanjang ke Bawah (Responsive Grid inside List) */}
+                        {/* List Container Memanjang ke Bawah */}
                         <div className="border border-gray-200 rounded-[4px] bg-white divide-y divide-gray-100 shadow-[0_1px_3px_rgba(0,0,0,0.02)] overflow-hidden">
                             {segmentData.map((item, i) => (
                                 <div
                                     key={i}
                                     className="p-4 grid grid-cols-2 sm:flex sm:flex-row sm:items-center justify-between gap-4 sm:gap-6 hover:bg-[#FEF5F6]/15 transition-colors duration-150 group"
                                 >
-                                    {/* 1. Nama Segmen */}
                                     <div className="col-span-2 sm:w-1/4 min-w-0 border-b sm:border-b-0 pb-2 sm:pb-0">
                                         <span className="text-xs font-semibold text-gray-900 block group-hover:text-[#D82F5A] transition-colors duration-150">
                                             {item.segment}
@@ -375,7 +378,6 @@ const AnalisisUlasan = () => {
                                         <span className="text-[10px] text-gray-400 mt-0.5 block">Customer segment</span>
                                     </div>
 
-                                    {/* 2. Total Customer */}
                                     <div className="sm:w-1/4">
                                         <span className="text-[10px] lg:text-xs text-gray-400 block mb-0.5">Total customer</span>
                                         <span className="text-sm lg:text-base font-semibold text-[#D82F5A] tracking-tight">
@@ -383,13 +385,11 @@ const AnalisisUlasan = () => {
                                         </span>
                                     </div>
 
-                                    {/* 3. Avg Monthly Charges */}
                                     <div className="sm:w-1/4">
                                         <span className="text-[10px] lg:text-xs text-gray-400 block mb-0.5">Avg monthly charges</span>
                                         <span className="text-xs font-semibold text-gray-800">${item.avgMonthly}</span>
                                     </div>
 
-                                    {/* 4. Avg Watch Hours */}
                                     <div className="sm:w-1/4">
                                         <span className="text-[10px] lg:text-xs text-gray-400 block mb-0.5">Avg weekly watch hours</span>
                                         <span className="text-xs font-semibold text-gray-800">{item.avgView}h</span>
@@ -400,6 +400,7 @@ const AnalisisUlasan = () => {
                     </div>
                 </div>
 
+                {/* Footer Section */}
                 <Footer />
             </main>
         </div>
