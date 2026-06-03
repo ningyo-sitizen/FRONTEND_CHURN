@@ -249,30 +249,30 @@ function SignUp() {
             window.close();
         }
 
-    const frontend_url = `${import.meta.env.VITE_BACKEND_URL}`
-    const handleMessage = (event) => {
-      if (
-        event.origin !== frontend_url &&
-        !event.origin.includes("railway.app")
-      ) {
-        return;
-      }
+        const frontend_url = `${import.meta.env.VITE_BACKEND_URL}`
+        const handleMessage = (event) => {
+            if (
+                event.origin !== frontend_url &&
+                !event.origin.includes("railway.app")
+            ) {
+                return;
+            }
 
-      const { token } = event.data;
+            const { token } = event.data;
 
-      if (token) {
-        localStorage.setItem("token", token);
+            if (token) {
+                localStorage.setItem("token", token);
 
-        console.log("Google Token:", token);
+                console.log("Google Token:", token);
 
-        navigate("/dashboardUser");
-      }
+                navigate("/dashboardUser");
+            }
 
-      if (event.data?.error) {
-        showNotif("err", event.data.error)
-        console.log("Error:", event.data.error);
-      }
-    };
+            if (event.data?.error) {
+                showNotif("err", event.data.error)
+                console.log("Error:", event.data.error);
+            }
+        };
 
         window.addEventListener("message", handleMessage);
 
@@ -282,10 +282,14 @@ function SignUp() {
     }, [navigate]);
 
     return (
-        <main className="w-full min-h-screen font-jakarta mx-auto bg-gradient-to-b from-white to-[#F6EAEC]">
-            <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.05)_2px,transparent_2px),linear-gradient(90deg,rgba(0,0,0,0.05)_1px,transparent_1px)]  bg-[size:30px_30px] 
-              [mask-image:radial-gradient(ellipse_at_center,black_10%,transparent_60%)] pointer-events-none"
-            />
+        <main className="w-full min-h-screen font-jakarta mx-auto bg-gradient-to-b from-white to-[#F6EAEC] relative overflow-hidden">      {/* BACKGROUND */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
+        w-[900px] h-[900px] 
+        bg-[linear-gradient(rgba(0,0,0,0.04)_2px,transparent_2px),linear-gradient(90deg,rgba(0,0,0,0.04)_1px,transparent_1px)] 
+        bg-[size:32px_32px] 
+        [mask-image:radial-gradient(circle_at_center,black_25%,transparent_70%)] 
+        pointer-events-none z-0"
+      />
             <div className="relative flex flex-col lg:flex-row min-h-screen overflow-hidden">
                 {/* Kiriiiiiiiii*/}
                 <section className="flex-1 relative flex flex-col justify-center items-center lg:items-start text-center">
@@ -296,7 +300,7 @@ function SignUp() {
                         <div className="bg-[url('https://cdn.designfast.io/image/2026-05-01/ba3f37fa-e105-4c2b-b1e9-2f72ab10513a.png')] w-[90px] h-[90px] bg-cover bg-center absolute top-[30px]"></div>
 
                         {/* TAGLINE */}
-                        <p className="text-sm text-[#D82F5A] bg-[#FEF5F6] border border-[#D82F5A] px-4 py-1 rounded-full">
+                        <p className="text-sm text-[#D82F5A] bg-[#FEF5F6] border border-[#D82F5A] mt-8 px-4 py-1 rounded-full">
                             Predict the Unpredictable
                         </p>
 
@@ -350,25 +354,33 @@ function SignUp() {
                                     </p>
                                 </div>
                             </div>
-                        <button
-                            type="button"
-                            onClick={() => navigate("/")}
-                            className="mt-4 flex items-center gap-2 text-xs text-gray-400 hover:text-[#D82F5A] transition-colors duration-200 group cursor-pointer"
-                        >
-                            <IconArrowLeft size={16} className="transform group-hover:-translate-x-0.5 transition-transform" />
-                            <span>Kembali ke Beranda</span>
-                        </button>
+                            <button
+                                type="button"
+                                onClick={() => navigate("/")}
+                                className="mt-4 flex items-center gap-2 text-xs text-gray-400 hover:text-[#D82F5A] transition-colors duration-200 group cursor-pointer"
+                            >
+                                <IconArrowLeft size={16} className="transform group-hover:-translate-x-0.5 transition-transform" />
+                                <span>Kembali ke Beranda</span>
+                            </button>
                         </div>
 
                     </div>
 
                 </section>
 
-                <div className="flex-1 flex justify-start lg:justify-start items-center min-h-screen ml-40 z-10">
+                <div className="flex-1 flex flex-col justify-center items-center min-h-screen lg:ml-40 z-10 px-4 py-8 relative">
+                    <div className="w-full max-w-lg mb-4 flex lg:hidden">
+                        <button
+                            type="button"
+                            onClick={() => navigate("/")}
+                            className="flex items-center gap-2 text-xs text-gray-400 hover:text-[#D82F5A] transition-colors duration-200 group cursor-pointer"
+                        >
+                            <IconArrowLeft size={16} className="transform group-hover:-translate-x-0.5 transition-transform" />
+                            <span>Kembali ke Beranda</span>
+                        </button>
+                    </div>
 
-                    <div className="absolute max-w-lg lg:max-w-lg bg-[#F9FAFB] border border-[#EDEDED] rounded-lg p-8 shadow-sm"
-                    >
-
+                    <div className="w-full max-w-lg bg-[#F9FAFB] border border-[#EDEDED] rounded-lg p-6 sm:p-8 shadow-sm">
                         <div className="text-left pt-2">
                             <h2 className="text-xl font-semibold text-black">Daftar Akun</h2>
                             <p className="text-lg font-normal text-[#9A9A9A] mt-2 mb-8">
@@ -412,64 +424,73 @@ function SignUp() {
                                         <p className="font-medium text-lg py-2">Otentikasi langkah ke satu</p>
                                         <p className="font-extralight text-[#616161]">Mulai langkah pertama Anda untuk menjaga setiap pelanggan tetap setia. Masukkan email kantor untuk mendaftar.</p>
                                     </div>
-                                    <div className="relative text-left mt-4">
-                                        <p className="text-regular">Email</p>
-                                        <div className="flex text-sm items-center border border-gray-300 rounded-lg p-3 w-full focus-within:ring-2 focus-within:ring-[#023048] mb-3">
-                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                width="24"
-                                                height="24"
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                stroke-width="1.25"
-                                                className="text-[#B3B3B3] mr-2"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                class="icon icon-tabler icons-tabler-outline icon-tabler-mail">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10" />
-                                                <path d="M3 7l9 6l9 -6" />
-                                            </svg>
-                                            <input
-                                                type="text"
-                                                placeholder="guess@gmail.com"
-                                                value={email}
-                                                onChange={(e) => {
-                                                    setEmail(e.target.value);
-                                                }}
-                                                className="outline-none w-full"
-                                            />
+                                    <div className="relative text-left mt-6 font-['Plus_Jakarta_Sans',sans-serif]">
+                                        <div className="w-full flex flex-col">
+                                            <label className="text-sm font-medium text-slate-700 mb-2 tracking-wide">
+                                                Email
+                                            </label>
+
+                                            <div className="flex items-center text-sm border border-slate-200 rounded-[4px] px-3.5 py-3 w-full bg-white transition-all focus-within:border-[#D82F5A] focus-within:ring-1 focus-within:ring-[#D82F5A] shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="18"
+                                                    height="18"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    strokeWidth="1.5"
+                                                    className="text-slate-400 mr-2.5 shrink-0"
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                >
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                    <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10" />
+                                                    <path d="M3 7l9 6l9 -6" />
+                                                </svg>
+
+                                                <input
+                                                    type="email"
+                                                    placeholder="guess@gmail.com"
+                                                    value={email}
+                                                    onChange={(e) => setEmail(e.target.value)}
+                                                    className="outline-none w-full bg-transparent text-slate-800 placeholder-slate-400 text-sm"
+                                                />
+                                            </div>
                                         </div>
-                                    </div>
-                                    {/* Remember */}
-                                    <div className="flex justify-between items-center w-full text-xs text-[#929191] my-5">
-                                        <label className="flex items-center space-x-2">
-                                            <input type="checkbox" className="accent-[#D82F5A]"
-                                                checked={rememberMe}
-                                                onChange={(e) => setRememberMe(e.target.checked)} />
-                                            <span>Apakah email ini sudah benar?</span>
-                                        </label>
-                                    </div>
-                                    <button
-                                        type="button"
-                                        onClick={() => {
-                                            if (!email.trim()) {
-                                                showNotif("error", "Tolong isi email");
-                                                return;
-                                            }
-                                            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-                                            if (!emailRegex.test(email)) {
-                                                showNotif("error", "Format email tidak valid");
-                                                return;
-                                            }
+                                        <div className="flex justify-between items-center w-full text-xs text-[#929191] mt-5 mb-6">
+                                            <label className="flex items-center space-x-2 cursor-pointer select-none">
+                                                <input
+                                                    type="checkbox"
+                                                    className="accent-[#D82F5A] h-4 w-4 rounded border-gray-300 transition-all"
+                                                    checked={rememberMe}
+                                                    onChange={(e) => setRememberMe(e.target.checked)}
+                                                />
+                                                <span className="text-slate-500 font-medium">Apakah email ini sudah benar?</span>
+                                            </label>
+                                        </div>
 
-                                            handleRegister();
-                                        }}
-                                        className="bg-[#000000] text-white w-full h-12 rounded-lg hover:bg-[#667790] transition duration-200 font-semibold"
-                                    >
-                                        Selanjutnya
-                                    </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                if (!email.trim()) {
+                                                    showNotif("error", "Tolong isi email");
+                                                    return;
+                                                }
+                                                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                                                if (!emailRegex.test(email)) {
+                                                    showNotif("error", "Format email tidak valid");
+                                                    return;
+                                                }
+
+                                                handleRegister();
+                                            }}
+                                            className="bg-[#000000] text-white w-full h-12 rounded-[4px] hover:bg-zinc-900 transition duration-200 font-semibold text-sm shadow-md active:scale-[0.99]"
+                                        >
+                                            Selanjutnya
+                                        </button>
+                                    </div>
                                     <div className="flex items-center w-full text-[#616161] text-sm py-4">
                                         <div className="flex-1 border-t border-[#BFC0C0]"></div>
 

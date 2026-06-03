@@ -1,4 +1,4 @@
-#root {
+/* #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
@@ -44,19 +44,16 @@
   color: #888;
 }
 
-/* tanggalan */
-/* Custom DayPicker */
+
 .rdp-root {
-    font-size: 0.75rem; /* kecil sesuai desain */
+    font-size: 0.75rem;
 }
 
-/* Hari ini */
 .rdp-root .rdp-today:not(.rdp-outside) .rdp-day_button {
     font-weight: bold;
     color: #01040a;
 }
 
-/* Start & End date */
 .rdp-root .rdp-range_start .rdp-day_button,
 .rdp-root .rdp-range_end .rdp-day_button {
     background-color: #667790;
@@ -65,7 +62,6 @@
     font-weight: normal;
 }
 
-/* Tengah range */
 .rdp-root .rdp-range_middle .rdp-day_button {
     background-color: #dce1f0;
     color: inherit;
@@ -146,4 +142,4 @@
     .calendar-scale .rdp-head_cell {
         font-size: 0.85rem;
     }
-}
+} */
