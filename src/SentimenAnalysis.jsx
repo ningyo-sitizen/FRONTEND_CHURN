@@ -25,7 +25,7 @@ import { useAuth } from '../utils/auth.js';
 import AppSearchDropdown from './AppSearchDropdown.jsx';
 
 const SentimenAnalysis = () => {
-    const {showNotif} = useNotif()
+    const { showNotif } = useNotif()
     const user = useAuth()
     const [activeTab, setActiveTab] = useState("positif");
     const [searchApp, setSearchApp] = useState("");
@@ -78,8 +78,8 @@ const SentimenAnalysis = () => {
             formData.append("start_date", startDate);
             formData.append("end_date", endDate);
 
-            if (startDate || endDate === null) {
-                return showNotif("error","tolong isi semua date")
+            if (startDate === "" || endDate === "") {
+                return showNotif("error", "Tolong isi semua tanggal");
             }
 
             if (selectedAppId) {
