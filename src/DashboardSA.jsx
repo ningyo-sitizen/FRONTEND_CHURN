@@ -235,8 +235,8 @@ export default function DashboardSA() {
     };
 
     return (
-        <main className="bg-[#F9FAFB] min-h-screen font-jakarta">
-            <div className="flex">
+        <main className="bg-[#F9FAFB] min-h-screen font-jakarta overflow-x-hidden">
+            <div className="flex flex-col lg:flex-row">
 
                 {/* SIDEBAR */}
                 <SidebarSA />
