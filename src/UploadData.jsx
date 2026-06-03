@@ -146,7 +146,7 @@ const UploadDataFull = () => {
                             <div className="flex items-center gap-2 mt-1 transition-all">
                                 {/* Link Dashboard - Bisa di klik */}
                                 <span
-                                    onClick={() => window.location.href = '/DashboardUser'}
+                                    onClick={() => window.location.href = '/dashboardUser'}
                                     className="text-xs text-gray-400  cursor-pointer hover:text-[#D82F5A] transition-colors"
                                 >
                                     Dashboard

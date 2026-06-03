@@ -36,6 +36,18 @@ function SignUp() {
 
     };
     const makeNewAcc = async () => {
+<<<<<<< HEAD
+=======
+        if (
+            !checks.length ||
+            !checks.letter ||
+            !checks.number ||
+            !checks.special
+        ) {
+            return showNotif("error", "Mohon ikuti standar password.");
+        }
+
+>>>>>>> cd385b5d1ade52536bd57dbcf5cd21bb3289e929
         const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/register/newAcc`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -289,7 +301,11 @@ function SignUp() {
         bg-[size:32px_32px] 
         [mask-image:radial-gradient(circle_at_center,black_25%,transparent_70%)] 
         pointer-events-none z-0"
+<<<<<<< HEAD
       />
+=======
+            />
+>>>>>>> cd385b5d1ade52536bd57dbcf5cd21bb3289e929
             <div className="relative flex flex-col lg:flex-row min-h-screen overflow-hidden">
                 {/* Kiriiiiiiiii*/}
                 <section className="flex-1 relative flex flex-col justify-center items-center lg:items-start text-center">

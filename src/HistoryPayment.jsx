@@ -122,7 +122,7 @@ const HistoryPayment = () => {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-50">
-                                {payment.map((item, index) => (
+                                {payment?.map((item, index) => (
                                     <tr key={item.order_id} className="group hover:bg-[#FEF5F6]/20 transition-all">
                                         <td className="px-6 py-5 text-center text-[12px] text-gray-400 font-medium">
                                             {String(index + 1).padStart(2, '0')}

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNotif } from "./NotificationContext";
+
 import {
   IconLayoutDashboard,
   IconChartBar,
@@ -24,11 +26,19 @@ import { IconLogout2 } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Header from './Header';
+<<<<<<< HEAD
 import {useAuth} from '../utils/auth'
+=======
+import { useAuth } from '../utils/auth'
+>>>>>>> cd385b5d1ade52536bd57dbcf5cd21bb3289e929
 import Sidebar from './SideBar';
 
 
 const Feedback = () => {
+<<<<<<< HEAD
+=======
+  const { showNotif } = useNotif();
+>>>>>>> cd385b5d1ade52536bd57dbcf5cd21bb3289e929
   const user = useAuth()
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
@@ -88,7 +98,14 @@ const Feedback = () => {
       setRating(0);
 
     } catch (error) {
+<<<<<<< HEAD
 
+=======
+      showNotif(
+        "error",
+        error.response?.data?.message || "Upload gagal"
+      );
+>>>>>>> cd385b5d1ade52536bd57dbcf5cd21bb3289e929
       console.log(error);
 
     }
@@ -98,12 +115,20 @@ const Feedback = () => {
     <div className="min-h-screen bg-white font-['Plus_Jakarta_Sans',sans-serif] text-[#111827] flex flex-col">
       <div className="flex flex-1">
         {/* SIDEBAR - Sharp 4px edges */}
+<<<<<<< HEAD
       <Sidebar></Sidebar>
+=======
+        <Sidebar></Sidebar>
+>>>>>>> cd385b5d1ade52536bd57dbcf5cd21bb3289e929
 
         {/* MAIN CONTENT */}
         <main className="flex-1 flex flex-col min-w-0 bg-[#F9FAFB]">
           {/* TOPBAR - Full Stretch */}
+<<<<<<< HEAD
         <Header formData={user} profileImg={user?.avatar} />
+=======
+          <Header formData={user} profileImg={user?.avatar} />
+>>>>>>> cd385b5d1ade52536bd57dbcf5cd21bb3289e929
 
           {/* PAGE CONTENT */}
           <div className="p-8 w-full">
