@@ -363,7 +363,7 @@ function Login() {
               {/* GOOGLE LOGIN */}
               <button
                 type="button"
-                onClick={() => openPopup("http://localhost:5000/auth/google/login")}
+                onClick={() => openPopup(`${import.meta.env.VITE_BACKEND_URL}/auth/google/login`)}
                 className="flex items-center justify-center gap-3 w-full border border-gray-300 bg-white rounded-lg p-3 text-gray-600 hover:bg-gray-50 hover:border-gray-400 transition"
               >
                 <svg width="18" height="18" viewBox="0 0 48 48">
