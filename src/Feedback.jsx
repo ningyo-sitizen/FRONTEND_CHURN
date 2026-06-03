@@ -231,9 +231,11 @@ const Feedback = () => {
                   <p className="text-xs text-gray-400 leading-relaxed mb-4">
                     Butuh bantuan integrasi data atau menemukan bug sistem?
                   </p>
-                  <button className="w-full py-2.5 bg-[#D82F5A] text-white text-xs rounded-[4px] hover:bg-[#b52448] transition-colors">
-                    Buka Tiket Bantuan
-                  </button>
+                  <a href="https://wa.me/08779999818" target="_blank" rel="noopener noreferrer">
+                    <button className="w-full py-2.5 bg-[#D82F5A] text-white text-xs rounded-[4px] hover:bg-[#b52448] transition-colors">
+                      Buka Tiket Bantuan
+                    </button>
+                  </a>
                 </div>
 
                 <div className="bg-white border border-gray-200 p-6 rounded-[4px]">
