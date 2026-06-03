@@ -7,22 +7,58 @@ import { IconUserCircle } from '@tabler/icons-react';
 import { IconLogout2 } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
+import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from "../utils/auth";
 import Header from './Header';
 import Footer from './Footer';
+import { useNotif } from "./NotificationContext"
+import LoadingOverlay from './LoadingOverlay';
+
 
 const UploadDataFull = () => {
+    const [isLoading, setisLoading] = useState(false);
+    const [isLoadingProcess, setIsLoadingProcess] = useState(false);
+    const [loadingProgress, setLoadingProgress] = useState(0);
+    const { showNotif } = useNotif();
     const [isOpen, setIsOpen] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
     const [uploadMethod, setUploadMethod] = useState('update');
     const [isDragging, setIsDragging] = useState(false);
     const fileInputRef = useRef(null);
     const navigate = useNavigate();
+    const [csvData, setCsvData] = useState([]);
+    const [csvHeaders, setCsvHeaders] = useState([]);
+    const [showModal, setShowModal] = useState(false);
     const handleBrowseClick = () => fileInputRef.current.click();
 
     const user = useAuth()
 
+    const parseCsvContent = (file) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const text = e.target.result;
+            const lines = text.split(/\r?\n/).filter(line => line.trim() !== "");
+
+            console.log(text)
+
+            if (lines.length > 0) {
+                const delimiter = lines[0].includes(";") ? ";" : ",";
+
+                const headers = lines[0].split(delimiter).map(h => h.replace(/['"]+/g, '').trim());
+                const rows = lines.slice(1).map(line => {
+                    return line.split(delimiter).map(cell => cell.replace(/['"]+/g, '').trim());
+                });
+
+                setCsvHeaders(headers);
+                setCsvData(rows);
+            }
+        };
+        reader.readAsText(file);
+    };
+
     const processFile = (file) => {
+        console.log(file)
+        parseCsvContent(file)
         if (file && (file.type === "text/csv" || file.name.endsWith('.csv'))) {
             setSelectedFile({
                 name: file.name,
@@ -34,13 +70,17 @@ const UploadDataFull = () => {
         }
     };
     const handleUpload = async () => {
+        const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+        setisLoading(true)
+
+        await delay(2000);
 
         if (!selectedFile) {
             return alert("Pilih file dulu");
         }
 
         try {
-
             const formData = new FormData();
 
             formData.append("file", selectedFile.raw);
@@ -58,6 +98,8 @@ const UploadDataFull = () => {
                 }
             );
 
+            setisLoading(false)
+
             navigate("/validasiProses", {
                 state: {
                     file: selectedFile,
@@ -67,7 +109,11 @@ const UploadDataFull = () => {
 
         } catch (err) {
 
-            console.log(err);
+            showNotif(
+                "error",
+                err.response?.data?.message || "Upload gagal"
+            );
+            setisLoading(false)
 
         }
 
@@ -294,7 +340,15 @@ const UploadDataFull = () => {
                                             </div>
                                         </div>
                                         <div className="flex gap-2 mt-4">
-                                            <button className="flex-1 py-2 bg-[#111827] text-white text-xs rounded-[4px]">Rincian</button>
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    setShowModal(true);
+                                                }}
+                                                className="flex-1 py-2 bg-[#111827] text-white text-[11px] md:text-xs rounded-[4px] hover:bg-gray-800 transition-colors cursor-pointer"
+                                            >
+                                                Rincian
+                                            </button>
                                             <button onClick={() => setSelectedFile(null)} className="flex-1 py-2 border border-[#D82F5A] text-[#D82F5A] text-xs  rounded-[4px]">Hapus</button>
                                         </div>
                                     </div>
@@ -350,9 +404,159 @@ const UploadDataFull = () => {
                             </div>
                         </div>                    </div>
                 </div >
+                <AnimatePresence>
+                    {isLoadingProcess && (
+                        <div className="fixed inset-0 z-[150] flex items-center justify-center p-6">
+                            {/* Backdrop */}
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                className="absolute inset-0 bg-white/40 backdrop-blur-[4px]"
+                            />
 
+                            {/* Modal Card */}
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.99, y: 10 }}
+                                animate={{ opacity: 1, scale: 1, y: 0 }}
+                                exit={{ opacity: 0, scale: 0.99, y: 10 }}
+                                className="bg-white w-full max-w-[380px] rounded-[4px] border border-[#ededed] shadow-[0_10px_40px_rgba(0,0,0,0.02)] relative z-10 overflow-hidden"
+                            >
+                                {/* TOMBOL X (CLOSE) - Di Pojok Kanan Atas */}
+                                <button
+                                    onClick={() => {
+                                        setIsLoadingProcess(false);
+                                        // Jangan lupa kalau ada variable interval di luar, di clear di sini
+                                    }}
+                                    className="absolute top-4 right-4 text-gray-300 hover:text-[#D82F5A] transition-colors p-1"
+                                >
+                                    <i className="ti ti-x text-xl"></i>
+                                </button>
+
+                                <div className="p-12">
+                                    {/* Header Section */}
+                                    <div className="flex justify-between items-end mb-8">
+                                        <div className="space-y-1">
+                                            <h3 className="text-base font-semibold text-gray-900">
+                                                Analisis Data
+                                            </h3>
+                                            <p className="text-xs text-gray-400 font-medium ">
+                                                {loadingProgress === 100 ? "Validasi Selesai" : "Sedang Berjalan"}
+                                            </p>
+                                        </div>
+
+                                        <span className="text-xl font-bold text-[#D82F5A] leading-none tabular-nums tracking-tighter">
+                                            {Math.round(loadingProgress)}%
+                                        </span>
+                                    </div>
+
+                                    {/* Progress Bar */}
+                                    <div className="relative w-full h-[4px] bg-gray-50 rounded-full overflow-hidden">
+                                        <motion.div
+                                            className="absolute top-0 left-0 h-full bg-[#D82F5A]"
+                                            style={{ width: `${loadingProgress}%` }}
+                                            transition={{ ease: "easeInOut" }}
+                                        />
+                                    </div>
+
+                                    {/* Footer Info */}
+                                    <div className="mt-8 flex items-center gap-3">
+                                        <div className="flex gap-1">
+                                            <motion.div
+                                                animate={{ opacity: [0.3, 1, 0.3] }}
+                                                transition={{ repeat: Infinity, duration: 1.5 }}
+                                                className="w-1.5 h-1.5 rounded-full bg-[#D82F5A]"
+                                            />
+                                            <motion.div
+                                                animate={{ opacity: [0.3, 1, 0.3] }}
+                                                transition={{ repeat: Infinity, duration: 1.5, delay: 0.2 }}
+                                                className="w-1.5 h-1.5 rounded-full bg-[#D82F5A]"
+                                            />
+                                        </div>
+                                        <span className="text-xs text-gray-400 font-medium">
+                                            Processing files...
+                                        </span>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        </div>
+                    )}
+                </AnimatePresence>
+                {/* MODAL POP-UP (Otomatis Full Screen di HP / Pop-up Center di Laptop) */}
+                {showModal && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 sm:p-4 animate-in fade-in duration-200">
+                        <div className="bg-white w-full h-full sm:rounded-[4px] sm:shadow-xl sm:w-full sm:max-w-5xl sm:h-auto sm:max-h-[85vh] flex flex-col overflow-hidden animate-in zoom-in-95 duration-200">
+
+                            {/* HEADER MODAL */}
+                            <div className="px-4 py-4 md:px-6 md:py-5 border-b border-[#EDEDED] flex items-center justify-between bg-white shrink-0">
+                                <div className="min-w-0 flex-1 pr-4">
+                                    <h3 className="text-xs md:text-base font-bold text-gray-900 tracking-tight truncate">
+                                        Isi File Konten
+                                    </h3>
+                                    <p className="text-[11px] md:text-xs text-gray-400 mt-0.5 font-normal truncate">
+                                        {selectedFile?.name}
+                                    </p>
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={() => setShowModal(false)}
+                                    className="text-gray-400 hover:text-gray-600 text-xs md:text-sm p-2 transition-colors cursor-pointer"
+                                >
+                                    ✕
+                                </button>
+                            </div>
+
+                            {/* AREA SCROLL TABEL (Mulus di-swipe pakai jempol) */}
+                            <div className="p-3 md:p-6 overflow-auto flex-1 bg-white">
+                                {csvData.length > 0 ? (
+                                    <div className="border border-[#EDEDED] rounded-[4px] overflow-x-auto w-full">
+                                        <table className="w-full text-left text-[10px] md:text-[11px] border-collapse font-sans min-w-full">
+                                            <thead className="bg-[#F9FAFB] border-b border-[#EDEDED] sticky top-0 z-10">
+                                                <tr>
+                                                    {csvHeaders.map((header, idx) => (
+                                                        <th key={idx} className="px-3 py-2 md:px-4 md:py-3 text-gray-500 font-semibold uppercase tracking-wider border-r border-[#EDEDED] last:border-0 whitespace-nowrap bg-[#F9FAFB]">
+                                                            {header}
+                                                        </th>
+                                                    ))}
+                                                </tr>
+                                            </thead>
+                                            <tbody className="divide-y divide-[#EDEDED] text-[#52525B] font-normal">
+                                                {csvData.map((row, rowIdx) => (
+                                                    <tr key={rowIdx} className="hover:bg-gray-50/70 transition-colors">
+                                                        {row.map((cell, cellIdx) => (
+                                                            <td key={cellIdx} className="px-3 py-2 md:px-4 md:py-2.5 border-r border-[#EDEDED] last:border-0 whitespace-nowrap max-w-xs truncate">
+                                                                {cell || "-"}
+                                                            </td>
+                                                        ))}
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                ) : (
+                                    <div className="text-center py-16 text-xs text-gray-400">
+                                        Gagal memuat isi dokumen atau file CSV kosong.
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* FOOTER MODAL (Ditambahkan mb-safe untuk layar HP berponi bawah) */}
+                            <div className="px-4 py-3 md:px-6 md:py-4 border-t border-[#EDEDED] flex justify-end bg-white shrink-0 mb-safe">
+                                <button
+                                    type="button"
+                                    onClick={() => setShowModal(false)}
+                                    className="w-full sm:w-auto px-5 py-2.5 sm:py-2 bg-[#111827] hover:bg-gray-800 text-white text-xs rounded-[4px] font-medium transition-colors cursor-pointer"
+                                >
+                                    Tutup
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                )}
                 {/* --- FOOTER --- */}
                 <Footer />
+                {isLoading && <LoadingOverlay />}
             </main >
         </div >
     );
