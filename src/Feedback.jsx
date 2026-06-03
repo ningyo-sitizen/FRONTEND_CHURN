@@ -93,7 +93,7 @@ const Feedback = () => {
     } catch (error) {
       showNotif(
         "error",
-        err.response?.data?.message || "Upload gagal"
+        error.response?.data?.message || "Upload gagal"
       );
       console.log(error);
 
