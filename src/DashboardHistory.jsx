@@ -426,7 +426,7 @@ const DashboarHistory = () => {
                                                                             `/DashboardDetail?prediction_id=${item.prediction_id}&CustomerID=${item.CustomerID}`
                                                                         )
                                                                         : navigate(
-                                                                            `/DashboardDetailNon?prediction_id=${item.prediction_id}&CustomerID=${item.CustomerID}`
+                                                                            `/DashboardDetail?prediction_id=${item.prediction_id}&CustomerID=${item.CustomerID}`
                                                                         )
                                                                 }
                                                                 className="text-[#D82F5A] hover:text-[#bb244a] p-1 inline-flex justify-center items-center transition-colors"
