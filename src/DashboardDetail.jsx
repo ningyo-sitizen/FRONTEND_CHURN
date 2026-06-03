@@ -252,7 +252,7 @@ export default function CostumerDetail() {
                             <div className="flex items-center gap-2 mt-1">
 
                                 <span
-                                    onClick={() => navigate('/dashboardUser')}
+                                    onClick={() => navigate('/d     ashboardUser')}
                                     className="text-[11px] text-gray-400 cursor-pointer hover:text-[#D82F5A]"
                                 >
                                     Dashboard

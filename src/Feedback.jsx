@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNotif } from "./NotificationContext";
+
 import {
   IconLayoutDashboard,
   IconChartBar,
@@ -24,11 +26,12 @@ import { IconLogout2 } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Header from './Header';
-import {useAuth} from '../utils/auth'
+import { useAuth } from '../utils/auth'
 import Sidebar from './SideBar';
 
 
 const Feedback = () => {
+  const { showNotif } = useNotif();
   const user = useAuth()
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
@@ -88,7 +91,10 @@ const Feedback = () => {
       setRating(0);
 
     } catch (error) {
-
+      showNotif(
+        "error",
+        err.response?.data?.message || "Upload gagal"
+      );
       console.log(error);
 
     }
@@ -98,12 +104,12 @@ const Feedback = () => {
     <div className="min-h-screen bg-white font-['Plus_Jakarta_Sans',sans-serif] text-[#111827] flex flex-col">
       <div className="flex flex-1">
         {/* SIDEBAR - Sharp 4px edges */}
-      <Sidebar></Sidebar>
+        <Sidebar></Sidebar>
 
         {/* MAIN CONTENT */}
         <main className="flex-1 flex flex-col min-w-0 bg-[#F9FAFB]">
           {/* TOPBAR - Full Stretch */}
-        <Header formData={user} profileImg={user?.avatar} />
+          <Header formData={user} profileImg={user?.avatar} />
 
           {/* PAGE CONTENT */}
           <div className="p-8 w-full">
