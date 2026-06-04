@@ -418,7 +418,7 @@ const SentimenAnalysis = () => {
                                 </div>
 
                                 {/* 2. SEKSI BANNER INFO & DOWNLOAD */}
-                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2 text-[11px] font-medium text-slate-400 border-t border-slate-100">
+             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2 text-[11px] font-medium text-slate-400 border-t border-slate-100">
                                     <div className="flex items-center gap-1.5 min-w-0">
                                         <AlertCircle size={13} className="text-amber-500 shrink-0" />
                                         <p className="truncate text-slate-400">
