@@ -430,8 +430,8 @@ const SentimenAnalysis = () => {
                                 {/* Tombol Unduh */}
                                 <div className="shrink-0 self-start sm:self-center">
                                     <a
-                                        href="/data_descriptions.csv"
-                                        download="data_descriptions.csv"
+                                        href="/Sentiment_Template.csv.csv"
+                                        download="Sentiment_Template.csv"
                                         className="inline-flex items-center gap-2 bg-white border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-700 text-[11px] font-semibold px-3 py-2 rounded-[4px] shadow-sm transition-all no-underline"
                                     >
                                         <i className="ti ti-download text-xs text-[#D82F5A]"></i>
