@@ -146,7 +146,7 @@ const UploadDataFull = () => {
                             <div className="flex items-center gap-2 mt-1 transition-all">
                                 {/* Link Dashboard - Bisa di klik */}
                                 <span
-                                    onClick={() => window.location.href = '/DashboardUser'}
+                                    onClick={() => window.location.href = '/dashboardUser'}
                                     className="text-xs text-gray-400  cursor-pointer hover:text-[#D82F5A] transition-colors"
                                 >
                                     Dashboard
@@ -282,63 +282,101 @@ const UploadDataFull = () => {
                     </div>
                     <div className="grid grid-cols-12 gap-10 mt-8">
                         {/* Area Upload */}
-                        <div className="col-span-7">
+                        <div className="col-span-12 xl:col-span-7">
                             <h3 className="text-sm font-medium mb-4 text-black">Unggah file</h3>
-                            <input type="file" ref={fileInputRef} onChange={handleFileChange} accept=".csv" className="hidden" />
+
+                            <input
+                                type="file"
+                                ref={fileInputRef}
+                                onChange={handleFileChange}
+                                accept=".csv"
+                                className="hidden"
+                            />
+
                             <div
-                                onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
+                                onDragOver={(e) => {
+                                    e.preventDefault();
+                                    setIsDragging(true);
+                                }}
                                 onDragLeave={() => setIsDragging(false)}
                                 onDrop={handleDrop}
-                                className={`border-2 border-dashed  bg-white rounded-[4px] p-16 flex flex-col items-center justify-center transition-all ${isDragging ? 'border-[#D82F5A] bg-red-50/20' : 'border-[#D82F5A] bg-white hover:border-red-100'}`}
+                                className={`border-2 border-dashed bg-white rounded-[4px] p-16 flex flex-col items-center justify-center transition-all ${isDragging
+                                        ? "border-[#D82F5A] bg-red-50/20"
+                                        : "border-[#D82F5A] bg-white hover:border-red-100"
+                                    }`}
                             >
-                                <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4"><svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="48"
-                                    height="48"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="#D82F5A"
-                                    strokeWidth="1.5"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="transition-all duration-300 group-hover:scale-110"
+                                <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="48"
+                                        height="48"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="#D82F5A"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        className="transition-all duration-300 group-hover:scale-110"
+                                    >
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
+                                        <path d="M7 9l5 -5l5 5" />
+                                        <path d="M12 4l0 12" />
+                                    </svg>
+                                </div>
+
+                                <p className="text-base font-semibold">
+                                    Pilih file atau seret dan lepaskan ke sini.
+                                </p>
+
+                                <p className="text-xs text-gray-400 mt-1">
+                                    format .csv (maksimal 10 mb)
+                                </p>
+
+                                <button
+                                    onClick={handleBrowseClick}
+                                    className="mt-6 px-6 py-2 border border-[#D9D9D9] rounded-[4px] text-xs hover:bg-gray-50"
                                 >
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
-                                    <path d="M7 9l5 -5l5 5" />
-                                    <path d="M12 4l0 12" />
-                                </svg></div>
-                                <p className="text-base font-semibold">Pilih file atau seret dan lepaskan ke sini.</p>
-                                <p className="text-xs text-gray-400 mt-1 ">format .csv (maksimal 10 mb)</p>
-                                <button onClick={handleBrowseClick} className="mt-6 px-6 py-2 border border-[#D9D9D9] rounded-[4px] text-xs hover:bg-gray-50">Telusuri file</button>
+                                    Telusuri file
+                                </button>
                             </div>
                         </div>
 
-                        {/* Pratinjau Data (Empty State by default) */}
-                        <div className="col-span-5">
-                            <h3 className="text-sm font-medium mb-4 text-black">Pratinjau data</h3>
+                        {/* Pratinjau Data */}
+                        <div className="col-span-12 xl:col-span-5">
+                            <h3 className="text-sm font-medium mb-4 text-black">
+                                Pratinjau data
+                            </h3>
+
                             {selectedFile ? (
-                                <div className="bg-white border border-[#EDEDED]  p-4 rounded-[4px] overflow-hidden shadow-sm animate-in fade-in zoom-in-95 duration-300">
-                                    <div className="h-36 bg-gray-50 flex items-center justify-center"><i className="ti ti-file-spreadsheet text-[#1D6F42] text-5xl"></i></div>
+                                <div className="bg-white border border-[#EDEDED] p-4 rounded-[4px] overflow-hidden shadow-sm animate-in fade-in zoom-in-95 duration-300">
+                                    <div className="h-36 bg-gray-50 flex items-center justify-center">
+                                        <i className="ti ti-file-spreadsheet text-[#1D6F42] text-5xl"></i>
+                                    </div>
+
                                     <div className="p-5">
-                                        <h4 className="text-sm font-medium truncate">{selectedFile.name}</h4>
+                                        <h4 className="text-sm font-medium truncate">
+                                            {selectedFile.name}
+                                        </h4>
+
                                         <div className="flex items-center gap-2 mt-1">
-                                            {/* Ukuran File */}
                                             <span className="text-[12px] text-gray-400">
                                                 {selectedFile.size} dari {selectedFile.size}
                                             </span>
 
-                                            {/* Titik Pemisah (Dot) */}
                                             <span className="text-gray-300 text-[10px]">●</span>
 
-                                            {/* Icon Centang Hijau & Teks Selesai */}
                                             <div className="flex items-center gap-1.5">
                                                 <div className="w-4 h-4 bg-[#4ADE80] rounded-full flex items-center justify-center">
                                                     <i className="ti ti-check text-white text-xs"></i>
                                                 </div>
-                                                <span className="text-xs text-gray-500 ">Selesai</span>
+
+                                                <span className="text-xs text-gray-500">
+                                                    Selesai
+                                                </span>
                                             </div>
                                         </div>
+
                                         <div className="flex gap-2 mt-4">
                                             <button
                                                 type="button"
@@ -349,28 +387,30 @@ const UploadDataFull = () => {
                                             >
                                                 Rincian
                                             </button>
-                                            <button onClick={() => setSelectedFile(null)} className="flex-1 py-2 border border-[#D82F5A] text-[#D82F5A] text-xs  rounded-[4px]">Hapus</button>
+
+                                            <button
+                                                onClick={() => setSelectedFile(null)}
+                                                className="flex-1 py-2 border border-[#D82F5A] text-[#D82F5A] text-xs rounded-[4px]"
+                                            >
+                                                Hapus
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             ) : (
                                 <div className="h-[305px] bg-white border border-[#EDEDED] border-dashed rounded-[4px] flex flex-col items-center justify-center text-center p-8 transition-all hover:border-red-200 group">
 
-                                    {/* Lingkaran Ikon Pink */}
                                     <div className="w-15 h-15 bg-white rounded-full flex items-center justify-center mb-6 shadow-sm border border-red-50 group-hover:scale-110 transition-transform duration-300">
                                         <i className="ti ti-file-search text-[#D82F5A] text-2xl"></i>
                                     </div>
 
-                                    {/* Judul Kecil (Hitam) */}
                                     <h4 className="text-sm font-medium text-[#111827] mb-2 tracking-tight">
                                         Pratinjau data belum tersedia
                                     </h4>
 
-                                    {/* Teks Deskriptif (Abu-abu Tua) */}
                                     <p className="text-xs text-gray-500 max-w-[300px] leading-relaxed">
                                         unggah file csv anda di area sebelah kiri untuk melihat ringkasan data di sini.
                                     </p>
-
 
                                 </div>
                             )}
