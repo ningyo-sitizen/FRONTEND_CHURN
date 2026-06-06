@@ -37,6 +37,7 @@ const DashboardUser = () => {
 
     const [showBulkPopup, setShowBulkPopup] = useState(false);
     const [showPredictionPopup, setShowPredictionPopup] = useState(false);
+    const [showProfilePopup, setShowProfilePopup] = useState(false);
 
     const [promo_ALL_R_H_S, setpromo_ALL_R_H_S] = useState("")
     const [promo_ALL_R_H_S_value, setpromo_ALL_R_H_S_value] = useState("")
@@ -117,7 +118,6 @@ const DashboardUser = () => {
 
     };
     const handleBulkEmail = async () => {
-        console.log("1")
         try {
             setisLoading(true)
             const token = localStorage.getItem("token")
@@ -139,7 +139,11 @@ const DashboardUser = () => {
 
                     promo_L_R_M_L_S: promo_L_R_M_L_S,
                     promo_L_R_M_L_S_value: promo_L_R_M_L_S_value,
-                    promo_L_R_M_L_S_expired: promo_L_R_M_L_S_expired
+                    promo_L_R_M_L_S_expired: promo_L_R_M_L_S_expired,
+
+                    nama_perusahaan : user?.nama_perusahaan,
+                    link_app : user?.link_app,
+                    nama_app : user?.nama_app
                 },
                 {
                     headers: {
@@ -190,11 +194,11 @@ const DashboardUser = () => {
 
     const makeprediction = async () => {
         if (
-            (!user?.nama_perusahaan || user?.nama_perusahaan === "unkown") &&
-            (!user?.nama_app || user?.nama_app === "unkown") &&
-            (!user?.link_app || user?.link_app === "unkown")
+            (!user?.nama_perusahaan || user?.nama_perusahaan === "unknown") &&
+            (!user?.nama_app || user?.nama_app === "unknown") &&
+            (!user?.link_app || user?.link_app === "unknown")
         ) {
-            showNotif('error', 'tolong lengkapi dulu informasi anda');
+            setShowProfilePopup(true)
         } else {
             navigate('/uploadData')
         }
@@ -967,6 +971,63 @@ const DashboardUser = () => {
                                     <div className="bg-gray-50 px-8 py-3 border-t border-[#EDEDED] flex justify-end">
                                         <button
                                             onClick={() => setShowPredictionPopup(false)}
+                                            className="text-[9px] text-gray-400 hover:text-red-500 font-bold uppercase tracking-tighter transition-colors"
+                                        >
+                                            [ Tutup ]
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        )
+                    }
+
+                    {
+                        showProfilePopup && (
+                            <div className="fixed inset-0 bg-black/40 backdrop-blur-[2px] flex justify-center items-center z-50 p-4">
+                                <div className="bg-[#F9FAFB] rounded-[4px] w-full max-w-[400px] shadow-[0_10px_25px_-5px_rgba(0,0,0,0.1)] border border-[#EDEDED]">
+
+                                    <div className="p-8">
+                                        {/* Header Clean dengan Icon Kecil */}
+                                        <div className="flex items-center gap-3 mb-4">
+                                            <div className="w-8 h-8 bg-white border border-[#EDEDED] rounded-[4px] flex items-center justify-center shadow-sm">
+                                                <i className="ti ti-plus text-[#D82F5A] text-lg"></i>
+                                            </div>
+                                            <h2 className="text-sm font-bold text-gray-800 uppercase tracking-[1.5px]">
+                                                membuat prediction
+                                            </h2>
+                                        </div>
+
+                                        {/* Content area dengan background abu-abu yang lebih kontras sedikit */}
+                                        <div className="bg-white border border-[#EDEDED] p-5 rounded-[4px] mb-6">
+                                            <p className="text-xs text-gray-500 leading-relaxed">
+                                                Sistem mendeteksi bahwa profile and belum lengkap
+                                                data detail <span className="text-gray-800 font-semibold">perusahaan</span> mu berlum lengkap semua mohon dilengkapi
+                                            </p>
+                                        </div>
+
+                                        {/* Action Buttons */}
+                                        <div className="flex flex-col gap-2">
+                                            <button
+                                                onClick={() => navigate('/profile')}
+                                                className="w-full bg-[#111827] hover:bg-[#D82F5A] text-white py-2.5 rounded-[4px] text-[11px] font-bold uppercase tracking-widest transition-all"
+                                            >
+                                                pergi ke profile
+                                            </button>
+
+                                            <button
+                                                onClick={() => setShowProfilePopup(false)}
+                                                className="w-full bg-transparent hover:bg-gray-100 text-gray-400 hover:text-gray-600 py-2 rounded-[4px] text-[10px] font-bold uppercase tracking-widest transition-all"
+                                            >
+                                                tutup
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {/* Footer info tipis */}
+                                    <div className="bg-gray-50 px-8 py-3 border-t border-[#EDEDED] flex justify-end">
+                                        <button
+                                            onClick={() => setShowProfilePopup(false)}
                                             className="text-[9px] text-gray-400 hover:text-red-500 font-bold uppercase tracking-tighter transition-colors"
                                         >
                                             [ Tutup ]

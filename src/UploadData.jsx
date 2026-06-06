@@ -136,7 +136,7 @@ const UploadDataFull = () => {
             <main className="flex-1 overflow-x-hidden">
 
                 {/* TOPBAR */}
-                <Header formData={user} profileImg={user?.profileImg} />
+                <Header formData={user} profileImg={user?.avatar} />
 
                 <div className="p-8 w-full">
                     <div className="mb-8">

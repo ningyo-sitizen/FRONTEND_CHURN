@@ -55,7 +55,7 @@ const AnalisisUlasan = () => {
                 }
             );
             const data = await response.json();
-            showNotif("success", "data analitik berhasil diambil");
+            showNotif(data.status,data.message)
             console.log(data);
             if (data.status === "success") {
                 setStats(data.stats);
@@ -65,7 +65,9 @@ const AnalisisUlasan = () => {
                 setFileName(data.filename);
                 setGenreData(data.genreInsight);
                 setSubscriptionRevenueData(data.subscriptionRevenueLoss);
-            }
+
+                showNotif("success", "data analitik berhasil diambil");
+            }   
         } catch (err) {
             console.log(err);
         } finally {

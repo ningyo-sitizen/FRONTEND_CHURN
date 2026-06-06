@@ -64,7 +64,10 @@ export default function CostumerDetail() {
           risk: detail.Risk,
           segment: detail.Segment,
           genre: detail.GenrePreference,
-          email: detail.email
+          email: detail.email,
+          nama_perusahaan: user?.nama_perusahaan,
+          link_app: user?.link_app,
+          nama_app: user?.nama_app
         }
       );
 
@@ -123,7 +126,7 @@ export default function CostumerDetail() {
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/email/send`,
         {
-          html : chatMessage,
+          html: chatMessage,
           email: detail.email
         }
       );

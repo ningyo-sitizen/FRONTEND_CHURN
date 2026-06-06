@@ -67,7 +67,6 @@ export default function CostumerDetail() {
     };
 
     const handleGenerateEmail = async () => {
-        // 1. Nyalakan loading tepat pas tombol diklik
         setLoadingPromo(true);
 
         try {
@@ -80,7 +79,10 @@ export default function CostumerDetail() {
                     risk: detail.Risk,
                     segment: detail.Segment,
                     genre: detail.GenrePreference,
-                    email: detail.email
+                    email: detail.email,
+                    nama_perusahaan: user?.nama_perusahaan,
+                    link_app: user?.link_app,
+                    nama_app: user?.nama_app
                 }
             );
 
@@ -112,10 +114,8 @@ export default function CostumerDetail() {
                         },
                     }
                 );
-
                 setDetail(response.data.data);
                 setChatMessage(response.data.data.email_sent)
-
                 setDisableButton(response.data.data.email_sent?.length > 0)
 
             } catch (error) {
@@ -142,7 +142,8 @@ export default function CostumerDetail() {
                 `${import.meta.env.VITE_BACKEND_URL}/email/send`,
                 {
                     html: chatMessage,
-                    email: detail.email
+                    email: detail?.email,
+                    id : detail?.CustomerID
                 },
                 {
                     headers: {
@@ -429,12 +430,27 @@ export default function CostumerDetail() {
                                         Kirim Chat
                                     </label>
 
-                                    <textarea
-                                        value={chatMessage}
-                                        onChange={(e) => setChatMessage(e.target.value)}
-                                        placeholder="Tulis pesan..."
-                                        className="w-full bg-gray-50 border border-gray-100 rounded-[4px] p-4 text-xs h-28 outline-none"
-                                    />
+                                    <div className="bg-gray-50 border rounded-[4px] p-4 min-h-[200px] max-h-[250px] overflow-auto">
+
+                                        {
+                                            chatMessage ? (
+
+                                                <div
+                                                    dangerouslySetInnerHTML={{
+                                                        __html: chatMessage
+                                                    }}
+                                                />
+
+                                            ) : (
+
+                                                <p className="text-xs text-gray-400">
+                                                    Generated email preview...
+                                                </p>
+
+                                            )
+                                        }
+
+                                    </div>
                                     <div className="flex gap-3 mt-3">
                                         <button
                                             disabled={disableButton}
