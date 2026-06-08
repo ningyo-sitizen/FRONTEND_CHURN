@@ -136,7 +136,7 @@ const UploadDataFull = () => {
             <main className="flex-1 overflow-x-hidden">
 
                 {/* TOPBAR */}
-                <Header formData={user} profileImg={user?.profileImg} />
+                <Header formData={user} profileImg={user?.avatar} />
 
                 <div className="p-8 w-full">
                     <div className="mb-8">
@@ -146,7 +146,7 @@ const UploadDataFull = () => {
                             <div className="flex items-center gap-2 mt-1 transition-all">
                                 {/* Link Dashboard - Bisa di klik */}
                                 <span
-                                    onClick={() => window.location.href = '/dashboardUser'}
+                                    onClick={() => navigate('/dashboardUser')}
                                     className="text-xs text-gray-400  cursor-pointer hover:text-[#D82F5A] transition-colors"
                                 >
                                     Dashboard

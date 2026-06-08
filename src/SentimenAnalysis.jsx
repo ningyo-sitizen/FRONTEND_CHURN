@@ -418,23 +418,27 @@ const SentimenAnalysis = () => {
                                 </div>
 
                                 {/* 2. SEKSI BANNER INFO & DOWNLOAD */}
-                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2 text-[11px] font-medium text-slate-400 border-t border-slate-100">
-                                    <div className="flex items-center gap-1.5 min-w-0">
-                                        <AlertCircle size={13} className="text-amber-500 shrink-0" />
-                                        <p className="truncate text-slate-400">
-                                            Maks. 5MB. Wajib kolom <code className="font-mono bg-slate-50 border border-slate-200 text-[#d82f5a] px-1 py-0.5 rounded-[2px] font-bold text-[10px]">content</code> yang berisi teks ulasan tontonan atau komplain dari penonton streaming yang ingin dianalisis secara otomatis.
-                                        </p>
-                                    </div>
-
-                                    <button
-                                        type="button"
-                                        onClick={handleDownloadTemplate}
-                                        className="shrink-0 flex items-center gap-1 text-slate-400 hover:text-[#d82f5a] transition-colors font-semibold self-start sm:self-auto"
-                                    >
-                                        <Download size={12} className="shrink-0" />
-                                        <span>Unduh Template CSV</span>
-                                    </button>
+                               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2 text-[11px] font-medium text-slate-400 border-t border-slate-100">
+                                {/* Teks Peringatan */}
+                                <div className="flex items-center gap-1.5 min-w-0">
+                                    <AlertCircle size={13} className="text-amber-500 shrink-0" />
+                                    <p className="truncate text-slate-400">
+                                        Maks. 5MB. Wajib kolom <code className="font-mono bg-slate-50 border border-slate-200 text-[#d82f5a] px-1 py-0.5 rounded-[2px] font-bold text-[10px]">content</code> yang berisi teks ulasan tontonan atau komplain dari penonton streaming yang ingin dianalisis secara otomatis.
+                                    </p>
                                 </div>
+
+                                {/* Tombol Unduh */}
+                                <div className="shrink-0 self-start sm:self-center">
+                                    <a
+                                        href="/Sentiment_Template.csv.csv"
+                                        download="Sentiment_Template.csv"
+                                        className="inline-flex items-center gap-2 bg-white border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-700 text-[11px] font-semibold px-3 py-2 rounded-[4px] shadow-sm transition-all no-underline"
+                                    >
+                                        <i className="ti ti-download text-xs text-[#D82F5A]"></i>
+                                        Unduh Template .CSV
+                                    </a>
+                                </div>
+                            </div>
                             </div>
 
                             {/* POP-UP LOADING OVERLAY SCREEN */}

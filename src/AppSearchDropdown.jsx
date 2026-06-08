@@ -17,7 +17,6 @@ const AppSearchDropdown = ({ value, onChange, onSelect, disabled }) => {
             clearTimeout(searchTimeoutRef.current);
         }
 
-
         if (value.trim().length < 2) {
             setSearchResults([]);
             setIsOpen(false);
@@ -155,7 +154,6 @@ const AppSearchDropdown = ({ value, onChange, onSelect, disabled }) => {
                                         e.target.src = 'https://via.placeholder.com/40?text=App';
                                     }}
                                 />
-
                                 {/* Info */}
                                 <div className="flex-1 min-w-0">
                                     <p className="text-xs font-semibold text-slate-700 group-hover:text-[#D82F5A] transition-colors truncate">
