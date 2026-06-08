@@ -340,7 +340,7 @@ const DashboardUser = () => {
                 <div className="bg-white rounded-[4px] border border-[#ededed] overflow-hidden">
 
                     {/* Table Header - border-b sudah dihapus */}
-                    <div className="p-4 md:p-6 flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center">
+                   <div className="p-4 md:p-6 flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center">
                         <div>
                             <h2 className="text-base md:text-lg font-semibold">
                                 Data Pelanggan & Prediksi Churn
@@ -486,9 +486,9 @@ const DashboardUser = () => {
                                         </table>
                                     </div>
 
-                                    {/* PAGINATION */}
-                                    <div className="flex justify-center items-center gap-2 mt-6 md:mt-8 font-['Plus_Jakarta_Sans',_sans-serif]">
-                                        {/* Tombol Sebelumnya (Sesuai potongan terakhir kode Anda) */}
+                                    {/* PAGINATION - Ditambahkan flex-wrap dan gap dinamis agar rapi di HP */}
+                                    <div className="flex flex-wrap justify-center items-center gap-3 mt-6 md:mt-8 font-['Plus_Jakarta_Sans',_sans-serif]">
+                                        {/* Tombol Sebelumnya */}
                                         <button
                                             disabled={page === 1}
                                             onClick={() => setPage(page - 1)}
@@ -499,44 +499,44 @@ const DashboardUser = () => {
                                             <span className="font-medium">Sebelumnya</span>
                                         </button>
 
-                                            {/* Render Angka Halaman */}
-                                            <div className="flex items-center gap-1.5">
-                                                {[...Array(totalPages)].map((_, index) => {
-                                                    const pageNum = index + 1;
-                                                    const isActive = page === pageNum;
+                                        {/* Render Angka Halaman - Ditambahkan flex-wrap juga agar deretan angka aman */}
+                                        <div className="flex flex-wrap items-center justify-center gap-1.5">
+                                            {[...Array(totalPages)].map((_, index) => {
+                                                const pageNum = index + 1;
+                                                const isActive = page === pageNum;
 
-                                                    return (
-                                                        <button
-                                                            key={pageNum}
-                                                            onClick={() => setPage(pageNum)}
-                                                            className={`w-9 h-9 flex items-center justify-center rounded-xl text-sm transition-all ${isActive
-                                                                ? "bg-[#F6EAEC] text-[#D82F5A] border border-[#DE869D] font-bold shadow-sm"
-                                                                : "text-[#D82F5A] hover:bg-[#F6EAEC]/50 font-medium"
-                                                                }`}
-                                                        >
-                                                            {pageNum}
-                                                        </button>
-                                                    );
-                                                })}
-                                            </div>
+                                                return (
+                                                    <button
+                                                        key={pageNum}
+                                                        onClick={() => setPage(pageNum)}
+                                                        className={`w-9 h-9 flex items-center justify-center rounded-xl text-sm transition-all ${isActive
+                                                            ? "bg-[#F6EAEC] text-[#D82F5A] border border-[#DE869D] font-bold shadow-sm"
+                                                            : "text-[#D82F5A] hover:bg-[#F6EAEC]/50 font-medium"
+                                                            }`}
+                                                    >
+                                                        {pageNum}
+                                                    </button>
+                                                );
+                                            })}
+                                        </div>
 
-                                            {/* Tombol Selanjutnya */}
-                                            <button
-                                                disabled={page === totalPages}
-                                                onClick={() => setPage(page + 1)}
-                                                className={`flex items-center gap-2 px-3 py-1 text-sm transition-colors ${page === totalPages ? "text-[#B3B3B3] cursor-not-allowed" : "text-[#757575] hover:text-[#D82F5A]"
-                                                    }`}
-                                            >
-                                                <span className="font-medium text-[#757575]">Selanjutnya</span>
-                                                <ChevronRight size={18} strokeWidth={2.5} color={page === totalPages ? "#B3B3B3" : "#D82F5A"} />
-                                            </button>
-                                        </div>                                    </>
-                                )
-                            }
-
-                        </div>
+                                        {/* Tombol Selanjutnya */}
+                                        <button
+                                            disabled={page === totalPages}
+                                            onClick={() => setPage(page + 1)}
+                                            className={`flex items-center gap-2 px-3 py-1 text-sm transition-colors ${page === totalPages ? "text-[#B3B3B3] cursor-not-allowed" : "text-[#757575] hover:text-[#D82F5A]"
+                                                }`}
+                                        >
+                                            <span className="font-medium text-[#757575]">Selanjutnya</span>
+                                            <ChevronRight size={18} strokeWidth={2.5} color={page === totalPages ? "#B3B3B3" : "#D82F5A"} />
+                                        </button>
+                                    </div>                                    </>
+                            )
+                        }
 
                     </div>
+
+                </div>
                     {showBulkPopup && (
                         <div className="fixed inset-0 bg-[#1A1A1A]/60 backdrop-blur-sm flex justify-center items-center z-50 p-4 font-['Plus_Jakarta_Sans',_sans-serif]">
                             <div className="bg-white rounded-[4px] w-full max-w-[1200px] shadow-xl overflow-hidden border border-gray-100">
