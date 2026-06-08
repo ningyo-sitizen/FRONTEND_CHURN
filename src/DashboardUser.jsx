@@ -343,10 +343,10 @@ const DashboardUser = () => {
                 {/* TABLE CARD */}
                 <div className="bg-white rounded-[4px] border border-[#ededed] overflow-hidden">
 
-                    {/* Table Header - border-b sudah dihapus */}
+                    {/* Table Header - Dioptimalkan untuk HP agar tombol tidak menumpuk */}
                    <div className="p-4 md:p-6 flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center">
                         <div>
-                            <h2 className="text-base md:text-lg font-semibold">
+                            <h2 className="text-base md:text-lg font-semibold text-gray-900">
                                 Data Pelanggan & Prediksi Churn
                             </h2>
                             <p className="text-[11px] md:text-xs text-gray-400 mt-1">
@@ -356,11 +356,12 @@ const DashboardUser = () => {
 
                         {
                             predictionData.length > 0 && (
-                                <div className="flex gap-2 sm:gap-3 w-full sm:w-auto">
+                                /* flex-wrap ditambahkan agar jika di HP yang sangat kecil, tombol otomatis turun rapi dan tidak keluar layar */
+                                <div className="flex flex-wrap gap-2 sm:gap-3 w-full sm:w-auto">
                                     {/* Tombol Bulk Email */}
                                     <button
                                         onClick={() => setShowBulkPopup(true)}
-                                        className="flex-1 sm:flex-none justify-center bg-[#D82F5A] hover:bg-[#E48CA3] text-[11px] md:text-xs text-white px-3 md:px-5 py-2 rounded-[4px] flex items-center gap-1.5 md:gap-2 transition-colors shadow-sm"
+                                        className="flex-1 sm:flex-none justify-center bg-[#D82F5A] hover:bg-[#E48CA3] text-[11px] md:text-xs text-white px-3 md:px-5 py-2.5 rounded-[4px] flex items-center gap-1.5 md:gap-2 transition-colors shadow-sm min-w-[100px]"
                                     >
                                         <i className="ti ti-mail-fast text-sm md:text-base"></i>
                                         Bulk Email
@@ -369,7 +370,7 @@ const DashboardUser = () => {
                                     {/* Tombol Prediksi Baru */}
                                     <button
                                         onClick={() => setShowPredictionPopup(true)}
-                                        className="flex-1 sm:flex-none justify-center bg-[#111827] hover:bg-gray-800 text-[11px] md:text-xs text-white px-3 md:px-4 py-2 rounded-[4px] flex items-center gap-1.5 md:gap-2 transition-colors shadow-sm"
+                                        className="flex-1 sm:flex-none justify-center bg-[#111827] hover:bg-gray-800 text-[11px] md:text-xs text-white px-3 md:px-4 py-2.5 rounded-[4px] flex items-center gap-1.5 md:gap-2 transition-colors shadow-sm min-w-[100px]"
                                     >
                                         <i className="ti ti-plus text-sm md:text-lg"></i>
                                         Prediksi Baru
@@ -382,14 +383,14 @@ const DashboardUser = () => {
                     <div className="p-4 md:p-6">
                         {
                             loading ? (
-                                <div className="text-center py-20">
+                                <div className="text-center py-20 text-sm text-gray-500">
                                     Loading...
                                 </div>
                             ) : predictionData.length === 0 ? (
                                 <div className="py-16 md:py-24 flex flex-col items-center text-center px-4">
                                     <img
                                         src={unggahdata}
-                                        className="w-32 md:w-40 mb-4"
+                                        className="w-32 md:w-40 mb-4 object-contain"
                                         alt=""
                                     />
                                     <h2 className="text-lg md:text-xl font-semibold mb-2">
@@ -402,27 +403,27 @@ const DashboardUser = () => {
                                         onClick={() => {
                                             makeprediction();
                                         }}             
-                                        className="bg-[#D82F5A] text-white text-xs md:text-sm px-4 py-2.5 md:py-3 rounded-[4px]"
+                                        className="bg-[#D82F5A] text-white text-xs md:text-sm px-5 py-2.5 md:py-3 rounded-[4px] hover:bg-[#E48CA3] transition-colors"
                                     >
                                         Upload Data
                                     </button>
                                 </div>
                             ) : (
                                 <>
-                                    {/* TABLE WRAPPER - overflow-x-auto membuat tabel bisa di-swipe kiri-kanan di HP */}
-                                    <div className="overflow-x-auto -mx-4 md:mx-0 whitespace-nowrap">
+                                    {/* TABLE WRAPPER - Diberikan padding horizontal tipis (px-4) agar teks di dalam sel tabel tidak mepet ke pinggir layar HP saat di-scroll */}
+                                    <div className="overflow-x-auto -mx-4 md:mx-0 whitespace-nowrap px-4 md:px-0">
                                         <table className="w-full min-w-[800px]">
                                             <thead>
                                                 <tr className="bg-[#D82F5A] text-white">
-                                                    <th className="p-3 md:p-4 text-xs font-semibold text-center">Customer ID</th>
-                                                    <th className="p-3 md:p-4 text-xs font-semibold text-center">Account Age</th>
-                                                    <th className="p-3 md:p-4 text-xs font-semibold text-center">Monthly Charges</th>
-                                                    <th className="p-3 md:p-4 text-xs font-semibold text-center">Total Charges</th>
-                                                    <th className="p-3 md:p-4 text-xs font-semibold text-center">Score</th>
-                                                    <th className="p-3 md:p-4 text-xs font-semibold text-center">Risk</th>
-                                                    <th className="p-3 md:p-4 text-xs font-semibold text-center">Prediction</th>
-                                                    <th className="p-3 md:p-4 text-xs font-semibold text-center">Segment</th>
-                                                    <th className="p-3 md:p-4 text-xs font-semibold text-center">Action</th>
+                                                    <th className="p-3 md:p-4 text-xs font-semibold text-center tracking-wider">Customer ID</th>
+                                                    <th className="p-3 md:p-4 text-xs font-semibold text-center tracking-wider">Account Age</th>
+                                                    <th className="p-3 md:p-4 text-xs font-semibold text-center tracking-wider">Monthly Charges</th>
+                                                    <th className="p-3 md:p-4 text-xs font-semibold text-center tracking-wider">Total Charges</th>
+                                                    <th className="p-3 md:p-4 text-xs font-semibold text-center tracking-wider">Score</th>
+                                                    <th className="p-3 md:p-4 text-xs font-semibold text-center tracking-wider">Risk</th>
+                                                    <th className="p-3 md:p-4 text-xs font-semibold text-center tracking-wider">Prediction</th>
+                                                    <th className="p-3 md:p-4 text-xs font-semibold text-center tracking-wider">Segment</th>
+                                                    <th className="p-3 md:p-4 text-xs font-semibold text-center tracking-wider">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -432,14 +433,14 @@ const DashboardUser = () => {
                                                             key={index}
                                                             className="border-b hover:bg-gray-50 transition-colors"
                                                         >
-                                                            <td className="p-3 md:p-4 text-center text-xs">{item.CustomerID}</td>
-                                                            <td className="p-3 md:p-4 text-center text-xs">{item.AccountAge}</td>
-                                                            <td className="p-3 md:p-4 text-center text-xs">${item.MonthlyCharges}</td>
-                                                            <td className="p-3 md:p-4 text-center text-xs">${item.TotalCharges}</td>
-                                                            <td className="p-3 md:p-4 text-center text-xs font-semibold">{item.Score}</td>
+                                                            <td className="p-3 md:p-4 text-center text-xs text-gray-600">{item.CustomerID}</td>
+                                                            <td className="p-3 md:p-4 text-center text-xs text-gray-600">{item.AccountAge}</td>
+                                                            <td className="p-3 md:p-4 text-center text-xs text-gray-600">${item.MonthlyCharges}</td>
+                                                            <td className="p-3 md:p-4 text-center text-xs text-gray-600">${item.TotalCharges}</td>
+                                                            <td className="p-3 md:p-4 text-center text-xs font-semibold text-gray-700">{item.Score}</td>
                                                             <td className="p-3 md:p-4 text-center">
                                                                 <span
-                                                                    className="px-3 md:px-4 py-1 rounded-full text-[11px] md:text-xs font-semibold inline-block"
+                                                                    className="px-3 md:px-4 py-1 rounded-full text-[11px] md:text-xs font-semibold inline-block min-w-[70px]"
                                                                     style={{
                                                                         backgroundColor:
                                                                             item.Risk === "High"
@@ -467,18 +468,18 @@ const DashboardUser = () => {
                                                                     )
                                                                 }
                                                             </td>
-                                                            <td className="p-3 md:p-4 text-center text-xs">{item.Segment}</td>
+                                                            <td className="p-3 md:p-4 text-center text-xs text-gray-600">{item.Segment}</td>
                                                             <td className="p-3 md:p-4 text-center">
                                                                 <div className="group relative flex justify-center items-center">
                                                                     <button
                                                                         onClick={() =>
                                                                             navigate(`/DashboardDetail?prediction_id=${item.prediction_id}&CustomerID=${item.CustomerID}`)
                                                                         }
-                                                                        className="p-1.5 md:p-2 text-[#D82F5A] hover:bg-[#FFE1E1] rounded-full transition-all duration-200 flex items-center justify-center"
+                                                                        className="p-1.5 md:p-2 text-[#D82F5A] hover:bg-[#FFE1E1] rounded-full transition-all duration-200 flex items-center justify-center focus:outline-none"
                                                                     >
                                                                         <ChevronRight size={18} strokeWidth={2} />
                                                                     </button>
-                                                                    <span className="absolute bottom-full mb-2 scale-0 group-hover:scale-100 transition-all duration-150 origin-bottom bg-gray-800 text-white text-[10px] px-2 py-1 rounded shadow-md whitespace-nowrap z-10">
+                                                                    <span className="absolute bottom-full mb-2 scale-0 group-hover:scale-100 transition-all duration-150 origin-bottom bg-gray-800 text-white text-[10px] px-2 py-1 rounded shadow-md whitespace-nowrap z-10 hidden sm:inline-block">
                                                                         Detail
                                                                     </span>
                                                                 </div>
@@ -490,21 +491,21 @@ const DashboardUser = () => {
                                         </table>
                                     </div>
 
-                                    {/* PAGINATION - Ditambahkan flex-wrap dan gap dinamis agar rapi di HP */}
-                                    <div className="flex flex-wrap justify-center items-center gap-3 mt-6 md:mt-8 font-['Plus_Jakarta_Sans',_sans-serif]">
+                                    {/* PAGINATION - Dioptimalkan jarak gap-nya agar saat wrap di layar HP tidak terlalu renggang */}
+                                    <div className="flex flex-wrap justify-center items-center gap-y-4 gap-x-2 sm:gap-3 mt-6 md:mt-8 font-['Plus_Jakarta_Sans',_sans-serif]">
                                         {/* Tombol Sebelumnya */}
                                         <button
                                             disabled={page === 1}
                                             onClick={() => setPage(page - 1)}
-                                            className={`flex items-center gap-2 px-3 py-1 text-sm transition-colors ${page === 1 ? "text-[#B3B3B3] cursor-not-allowed" : "text-[#757575] hover:text-[#D82F5A]"
+                                            className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1 text-xs sm:text-sm transition-colors ${page === 1 ? "text-[#B3B3B3] cursor-not-allowed" : "text-[#757575] hover:text-[#D82F5A]"
                                                 }`}
                                         >
-                                            <ChevronLeft size={18} strokeWidth={2.5} color={page === 1 ? "#B3B3B3" : "#D82F5A"} />
+                                            <ChevronLeft size={16} strokeWidth={2.5} color={page === 1 ? "#B3B3B3" : "#D82F5A"} />
                                             <span className="font-medium">Sebelumnya</span>
                                         </button>
 
-                                        {/* Render Angka Halaman - Ditambahkan flex-wrap juga agar deretan angka aman */}
-                                        <div className="flex flex-wrap items-center justify-center gap-1.5">
+                                        {/* Render Angka Halaman */}
+                                        <div className="flex flex-wrap items-center justify-center gap-1">
                                             {[...Array(totalPages)].map((_, index) => {
                                                 const pageNum = index + 1;
                                                 const isActive = page === pageNum;
@@ -513,7 +514,7 @@ const DashboardUser = () => {
                                                     <button
                                                         key={pageNum}
                                                         onClick={() => setPage(pageNum)}
-                                                        className={`w-9 h-9 flex items-center justify-center rounded-xl text-sm transition-all ${isActive
+                                                        className={`w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-xl text-xs sm:text-sm transition-all ${isActive
                                                             ? "bg-[#F6EAEC] text-[#D82F5A] border border-[#DE869D] font-bold shadow-sm"
                                                             : "text-[#D82F5A] hover:bg-[#F6EAEC]/50 font-medium"
                                                             }`}
@@ -528,13 +529,14 @@ const DashboardUser = () => {
                                         <button
                                             disabled={page === totalPages}
                                             onClick={() => setPage(page + 1)}
-                                            className={`flex items-center gap-2 px-3 py-1 text-sm transition-colors ${page === totalPages ? "text-[#B3B3B3] cursor-not-allowed" : "text-[#757575] hover:text-[#D82F5A]"
+                                            className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1 text-xs sm:text-sm transition-colors ${page === totalPages ? "text-[#B3B3B3] cursor-not-allowed" : "text-[#757575] hover:text-[#D82F5A]"
                                                 }`}
                                         >
                                             <span className="font-medium text-[#757575]">Selanjutnya</span>
-                                            <ChevronRight size={18} strokeWidth={2.5} color={page === totalPages ? "#B3B3B3" : "#D82F5A"} />
+                                            <ChevronRight size={16} strokeWidth={2.5} color={page === totalPages ? "#B3B3B3" : "#D82F5A"} />
                                         </button>
-                                    </div>                                    </>
+                                    </div>
+                                </>
                             )
                         }
 
