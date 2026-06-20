@@ -385,7 +385,7 @@ const SentimenAnalysis = () => {
                                     <div className="flex items-center gap-1.5 min-w-0">
                                         <AlertCircle size={13} className="text-amber-500 shrink-0" />
                                         <p className="truncate text-slate-400">
-                                            Selama masa demo, maksimal 50 ulasan yang dapat dianalisis per proses.
+                                            Selama masa demo, maksimal 20 ulasan yang dapat dianalisis per proses.
                                         </p>
                                     </div>
                                 </div>
