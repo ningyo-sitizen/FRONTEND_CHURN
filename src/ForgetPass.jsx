@@ -163,6 +163,11 @@ function ForgetPass() {
 
             const data = await res.json();
 
+            if (data.status === "success") {
+                navigate('/login')
+            }
+
+
             showNotif(data.status, data.message);
 
         } catch (err) {
@@ -170,6 +175,9 @@ function ForgetPass() {
             console.log(err);
 
             showNotif("error", "Server error");
+            if (data.status === "error") {
+                navigate('/login')
+            }
         }
     }
     const handleNext = (e) => {

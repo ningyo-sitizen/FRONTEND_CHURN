@@ -291,7 +291,7 @@ function Login() {
                 <div className="flex items-center justify-between mb-2">
                   <p className="text-sm font-medium text-gray-700">Password</p>
 
-                  <p className="text-xs font-medium text-[#D82F5A] cursor-pointer hover:underline">
+                  <p onClick={() => navigate('/forgetpass')} className="text-xs font-medium text-[#D82F5A] cursor-pointer hover:underline">
                     Lupa password?
                   </p>
                 </div>
